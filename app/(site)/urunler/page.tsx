@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import PageSlider from "@/components/PageSlider";
 import ProductGrid from "@/components/ProductGrid";
 import { getCategories, getProducts } from "@/lib/data";
 
@@ -13,14 +12,11 @@ export const metadata: Metadata = {
 export default async function Page() {
   const [products, categories] = await Promise.all([getProducts(), getCategories()]);
   return (
-    <>
-    <PageSlider page="urunler" />
     <ProductGrid
       title="Tüm ürünler"
       intro="Atölyeden çıkan her parça tek tek hazırlanır; aynısı ikinci kez olmayabilir."
       products={products}
       categories={categories}
     />
-    </>
   );
 }

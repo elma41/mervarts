@@ -65,11 +65,19 @@ export default async function Home() {
               return (
                 <li key={c.id} data-reveal>
                   <Link href={`/urunler/kategori/${c.slug}`} className="group block">
-                    <div className="aspect-[4/5] overflow-hidden bg-paper-2">
+                    <div className="cat-tile">
+                      <svg className="cat-lines" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+                        <path className="flow-line" pathLength="1" style={{ ["--d" as string]: "7s" }} d="M0 8 C 25 -2, 45 18, 70 6 S 100 12, 100 4" fill="none" strokeWidth="1.4" />
+                        <path className="flow-line" pathLength="1" style={{ ["--d" as string]: "9s", ["--delay" as string]: "1.5s" }} d="M100 92 C 75 102, 55 82, 30 94 S 0 88, 0 96" fill="none" strokeWidth="1.4" />
+                        <path className="flow-line" pathLength="1" style={{ ["--d" as string]: "8s", ["--delay" as string]: "3s" }} d="M4 0 C -2 30, 10 55, 3 100" fill="none" strokeWidth="1.4" />
+                        <path className="flow-line" pathLength="1" style={{ ["--d" as string]: "10s", ["--delay" as string]: "2s" }} d="M96 100 C 102 70, 90 45, 97 0" fill="none" strokeWidth="1.4" />
+                      </svg>
+                      <div className="cat-img">
                       {cv && (
                         // eslint-disable-next-line @next/next/no-img-element
                         <img src={cv.src.sm} width={640} height={800} alt="" loading="lazy" decoding="async" className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" />
                       )}
+                      </div>
                     </div>
                     <p className="mt-3 font-semibold group-hover:text-cobalt">{c.name}</p>
                   </Link>

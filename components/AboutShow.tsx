@@ -9,7 +9,7 @@ export default function AboutShow({ items }: { items: ShowItem[] }) {
   useEffect(() => {
     if (items.length < 2) return;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    const t = setInterval(() => setI((v) => (v + 1) % items.length), 4000);
+    const t = setInterval(() => setI((v) => (v + 1) % items.length), 3000);
     return () => clearInterval(t);
   }, [items.length]);
 

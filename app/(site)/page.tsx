@@ -2,17 +2,14 @@ import Link from "next/link";
 import ProductCard from "@/components/ProductCard";
 import ReviewBlock from "@/components/ReviewBlock";
 import HGallery from "@/components/HGallery";
-import { HatDivider, HeroSwash, ScrollHat } from "@/components/Hat";
+import ArtSlider, { type SlideData } from "@/components/ArtSlider";
+import { HatDivider, ScrollHat } from "@/components/Hat";
 import { getCategories, getProducts, getSettings } from "@/lib/data";
 import { price, productImage, sortImages } from "@/lib/format";
 import type { Product } from "@/lib/types";
 
 export const revalidate = 60;
 
-const DUST = [
-  [8, 72, 6, 9, 0], [18, 30, 4, 11, 1.2], [30, 84, 8, 8, 2.1], [44, 18, 5, 12, .6], [52, 66, 6, 10, 3], [63, 40, 4, 9, 1.8],
-  [72, 82, 7, 13, .3], [82, 24, 5, 10, 2.6], [90, 58, 6, 11, 1.1], [24, 56, 4, 14, 3.4], [58, 10, 5, 9, 2.2], [95, 90, 4, 12, .9],
-];
 
 function img(p: Product, n = 0) {
   const imgs = sortImages(p.product_images);
@@ -29,8 +26,21 @@ export default async function Home() {
   ]);
   const withPhoto = (list: Product[]) => list.filter((p) => img(p));
   const pool = withPhoto(featured.length ? featured : latest);
-  const slidesSrc = pool.slice(0, 4);
-  while (slidesSrc.length && slidesSrc.length < 4) slidesSrc.push(slidesSrc[slidesSrc.length % Math.max(1, pool.length)]);
+  const TONE: Record<string, { bg: string; dark: boolean }> = {
+    "esma-ul-husna": { bg: "#5a1a2b", dark: true },
+    "kisiye-ozel-harf": { bg: "#1f2a5c", dark: true },
+    "gul-ve-cicek": { bg: "#efd8d0", dark: false },
+    "rokoko-tezhip": { bg: "#2f5a46", dark: true },
+  };
+  const slides: SlideData[] = pool.slice(0, 5).map((p) => {
+    const im = img(p)!;
+    const t = TONE[p.categories?.slug || ""] || { bg: "#f1e8d6", dark: false };
+    return {
+      slug: p.slug, name: p.name, category: p.categories?.name || "", soldOut: p.is_sold_out,
+      price: p.pricing_mode === "fixed" && p.price != null ? price(p.price) : "Fiyat için teklif alın",
+      buy: p.shopier_url || s.shopier_url, src: im.src.lg, srcSet: im.src.srcSet, alt: im.alt, bg: t.bg, dark: t.dark,
+    };
+  });
   const scenes = pool.slice(0, 5);
   const showcase = latest.slice(0, 12);
   const names = latest.map((p) => p.name);
@@ -43,44 +53,13 @@ export default async function Home() {
     <>
       <ScrollHat />
 
-      {/* ============ TAM EKRAN GİRİŞ ============ */}
-      <section className="hero-shell" aria-label="Giriş">
-        {slidesSrc.map((p, i) => {
-          const im = img(p)!;
-          return (
-            <div className="slide" key={i} style={{ ["--i" as string]: i }}>
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img className="bg grade" src={im.src.lg} srcSet={im.src.srcSet} sizes="100vw" width={1600} height={2000} alt={i === 0 ? im.alt : ""} aria-hidden={i === 0 ? undefined : true}
-                fetchPriority={i === 0 ? "high" : "low"} loading={i === 0 ? "eager" : "lazy"} decoding="async" />
-              <Link href={`/urun/${p.slug}`} className="slide-cap group" tabIndex={i === 0 ? undefined : -1}>
-                <span className="block text-sm text-earth">{p.categories?.name}</span>
-                <span className="block font-display text-3xl italic transition-colors group-hover:text-cobalt sm:text-4xl">{p.name}</span>
-                {p.pricing_mode === "fixed" && p.price != null && <span className="block text-cobalt">{price(p.price)}</span>}
-              </Link>
-            </div>
-          );
-        })}
-        <div className="hero-shade" aria-hidden="true" />
-        <HeroSwash className="pointer-events-none absolute inset-0 h-full w-full" />
-        <div aria-hidden="true" className="pointer-events-none absolute inset-0 overflow-hidden">
-          {DUST.map(([x, y, z, t, d], i) => (
-            <span key={i} className="dust" style={{ left: `${x}%`, top: `${y}%`, width: z * 3, height: z * 3, ["--t" as string]: `${t}s`, ["--dl" as string]: `${d}s` }} />
-          ))}
-        </div>
-
-        <div className="absolute inset-x-0 bottom-0 mx-auto max-w-[1440px] px-5 pb-12 sm:px-10 sm:pb-16 lg:px-14">
-          <h1 className="font-display text-[clamp(4.2rem,13vw,12rem)] leading-[.84] tracking-[-.02em]">
-            <span className="rise block" style={{ ["--delay" as string]: ".2s" }}>Kalemle,</span>
-            <span className="rise block italic text-cobalt" style={{ ["--delay" as string]: ".45s" }}>altınla,</span>
-            <span className="rise block" style={{ ["--delay" as string]: ".7s" }}>sabırla.</span>
-          </h1>
-          <div className="rise mt-8 flex flex-wrap items-center gap-3" style={{ ["--delay" as string]: "1.1s" }}>
-            <Link href="/urunler" className="btn btn-primary">Koleksiyonu gör</Link>
-            <Link href="/ozel-siparis" className="btn btn-ghost">Kişiye özel iste</Link>
-          </div>
-        </div>
-        <span className="cue absolute bottom-0 left-1/2 hidden h-14 w-px bg-gold sm:block" aria-hidden="true" />
-      </section>
+      {/* ============ ESER SLAYTLARI ============ */}
+      {slides.length > 0 ? <ArtSlider slides={slides} /> : (
+        <section className="mx-auto max-w-[1440px] px-5 pb-16 pt-10 sm:px-10 lg:px-14">
+          <h1 className="font-display text-7xl sm:text-9xl">Kalemle, <em className="text-cobalt">altınla,</em> sabırla.</h1>
+          <Link href="/urunler" className="btn btn-primary mt-8">Koleksiyonu gör</Link>
+        </section>
+      )}
 
       {/* ============ KAYAN İSİMLER ============ */}
       {names.length > 0 && (
@@ -96,7 +75,7 @@ export default async function Home() {
         const im = img(p, 1)!;
         const buy = p.shopier_url || s.shopier_url;
         return (
-          <section key={p.id} className={`scene ${i % 2 ? "flip" : ""}`} aria-label={p.name}>
+          <section key={p.id} className={`scene on-photo ${i % 2 ? "flip" : ""}`} aria-label={p.name}>
             <div className="scene-media">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img className="grade" src={im.src.lg} srcSet={im.src.srcSet} sizes="100vw" width={1600} height={2000} alt={im.alt} loading="lazy" decoding="async" />
@@ -156,7 +135,7 @@ export default async function Home() {
       )}
 
       {/* ============ KİŞİYE ÖZEL ============ */}
-      <section aria-labelledby="ozel" className="relative mt-28 overflow-hidden bg-[#2a0f1a]">
+      <section aria-labelledby="ozel" className="on-photo relative mt-28 overflow-hidden bg-[#3a1220]">
         <svg data-draw viewBox="0 0 1200 400" preserveAspectRatio="xMidYMid slice" className="absolute inset-0 h-full w-full text-gold opacity-70" aria-hidden="true" focusable="false">
           <path className="ink-line" pathLength={1} strokeWidth="1.5" d="M-20 300 C 200 80, 360 360, 560 200 S 900 40, 1220 220" />
           <path className="ink-line" pathLength={1} strokeWidth="6" opacity=".5" d="M-20 330 C 200 110, 360 390, 560 230 S 900 70, 1220 250" />

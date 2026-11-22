@@ -6,7 +6,7 @@ export default function ProductGrid({
   title, intro, products, categories, active,
 }: { title: string; intro: string; products: Product[]; categories: Category[]; active?: string }) {
   const chip = (on: boolean) =>
-    `inline-flex min-h-[46px] items-center whitespace-nowrap border px-5 font-medium transition-colors ${on ? "border-ink bg-ink text-[#14121c]" : "border-line bg-mat hover:border-ink"}`;
+    `inline-flex min-h-[46px] items-center whitespace-nowrap border px-5 font-medium transition-colors ${on ? "border-ink bg-ink text-white" : "border-line bg-mat hover:border-ink"}`;
   return (
     <div className="mx-auto max-w-[1440px] px-5 pt-10 sm:px-10 lg:px-14">
       <header className="max-w-3xl">

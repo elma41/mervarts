@@ -45,7 +45,7 @@ export default function Header({ s }: { s: SiteSettings }) {
           <summary className="flex h-11 w-11 cursor-pointer list-none items-center justify-center border border-ink [&::-webkit-details-marker]:hidden" aria-label="Menüyü aç">
             <IconMenu />
           </summary>
-          <nav aria-label="Mobil menü" className="absolute right-0 top-14 w-64 border border-line bg-paper-2 p-2 shadow-xl">
+          <nav aria-label="Mobil menü" className="absolute right-0 top-14 w-64 border border-line bg-white p-2 shadow-xl">
             <ul className="flex flex-col">
               {NAV.map((n) => (
                 <li key={n.href}><Link href={n.href} className="block px-4 py-3 font-display text-xl hover:text-cobalt">{n.label}</Link></li>

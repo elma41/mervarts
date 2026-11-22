@@ -101,11 +101,18 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
         </div>
       </div>
 
-      <section id="teklif" aria-labelledby="teklif-baslik" className="mx-auto mt-20 max-w-5xl scroll-mt-24 px-5 sm:px-8">
-        <div className="panel p-6 sm:p-10">
-          <h2 id="teklif-baslik" className="font-display text-3xl">Bu parçadan size özel isteyin</h2>
-          <p className="mt-2 text-earth">Farklı ölçü, renk ya da kişiselleştirme için yazın; fiyat ve süreyi iletelim.</p>
-          <div className="mt-6"><QuoteForm productId={p.id} productName={p.name} /></div>
+      <section id="teklif" aria-labelledby="teklif-baslik" className="mx-auto mt-20 max-w-7xl scroll-mt-24 px-5 sm:px-8">
+        <div className="panel grid gap-8 p-6 sm:p-10 lg:grid-cols-[minmax(0,320px)_1fr] lg:gap-14 lg:p-14">
+          <div className="lg:pt-2">
+            <h2 id="teklif-baslik" className="font-display text-4xl leading-tight sm:text-5xl">Bu parçadan size özel isteyin</h2>
+            <p className="mt-4 text-lg text-earth">Farklı ölçü, renk ya da kişiselleştirme için yazın; fiyat ve süreyi iletelim.</p>
+            <ul className="mt-6 grid gap-2 text-sm text-earth">
+              <li>✦ Talebiniz doğrudan atölyeye ulaşır.</li>
+              <li>✦ Fiyat ve süre size yazılı olarak iletilir.</li>
+              <li>✦ Onayınız olmadan üretime başlanmaz.</li>
+            </ul>
+          </div>
+          <QuoteForm productId={p.id} productName={p.name} />
         </div>
       </section>
 

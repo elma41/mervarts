@@ -8,9 +8,16 @@ export default function Gallery({ images, name }: { images: Img[]; name: string 
   const [i, setI] = useState(0);
   const [zoom, setZoom] = useState(false);
   const [origin, setOrigin] = useState("50% 50%");
+  const [hold, setHold] = useState(false);
   const dlg = useRef<HTMLDialogElement>(null);
 
   const go = useCallback((d: number) => { setZoom(false); setI((x) => (x + d + images.length) % images.length); }, [images.length]);
+
+  useEffect(() => {
+    if (images.length < 2 || hold || zoom) return;
+    const t = setInterval(() => setI((x) => (x + 1) % images.length), 3000);
+    return () => clearInterval(t);
+  }, [images.length, hold, zoom]);
 
   useEffect(() => {
     const el = dlg.current;
@@ -33,35 +40,39 @@ export default function Gallery({ images, name }: { images: Img[]; name: string 
   const cur = images[i];
 
   return (
-    <div>
+    <div onMouseEnter={() => setHold(true)} onMouseLeave={() => setHold(false)}>
       <div className="rounded-[22px] bg-white p-3 shadow-[0_24px_50px_-28px_rgba(40,20,20,.45)] sm:p-4">
-      <button
-        type="button"
-        onClick={() => dlg.current?.showModal()}
-        className="card-media group block w-full cursor-zoom-in !rounded-xl overflow-hidden"
-        aria-label={`${name} görselini büyüt (${i + 1}/${images.length})`}
-      >
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={cur.lg} srcSet={cur.srcSet} sizes="(min-width:1024px) 50vw, 100vw" width={1600} height={2000} alt={cur.alt} fetchPriority={i === 0 ? "high" : "auto"} decoding="async" className="img-main" />
-        <span className="absolute bottom-3 right-3 flex h-10 w-10 items-center justify-center rounded-full bg-paper/90 text-ink shadow" aria-hidden="true"><IconZoom /></span>
-      </button>
+        <button
+          type="button"
+          onClick={() => { setHold(true); dlg.current?.showModal(); }}
+          className="relative block h-[min(60dvh,620px)] w-full cursor-zoom-in overflow-hidden rounded-xl bg-paper-2"
+          aria-label={`${name} görselini büyüt (${i + 1}/${images.length})`}
+        >
+          {images.map((im, n) => (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img key={im.lg} src={im.lg} srcSet={im.srcSet} sizes="(min-width:1024px) 50vw, 100vw" width={1600} height={2000} alt={im.alt}
+              loading={n === 0 ? "eager" : "lazy"} decoding="async"
+              className={`absolute inset-0 h-full w-full object-contain transition-opacity duration-700 ${n === i ? "opacity-100" : "opacity-0"}`} />
+          ))}
+          <span className="absolute bottom-3 right-3 flex h-9 w-9 items-center justify-center rounded-full bg-paper/90 text-ink shadow" aria-hidden="true"><IconZoom /></span>
+        </button>
+
+        {images.length > 1 && (
+          <ul className="mt-3 flex justify-center gap-2" aria-label="Ürün görselleri">
+            {images.map((im, n) => (
+              <li key={im.lg} className="w-14 sm:w-16">
+                <button type="button" onClick={() => setI(n)} aria-label={`Görsel ${n + 1}`} aria-current={n === i ? "true" : undefined}
+                  className={`relative block aspect-square w-full overflow-hidden rounded-xl bg-white p-0.5 transition ${n === i ? "ring-2 ring-clay" : "opacity-60 hover:opacity-100"}`}>
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src={im.sm} alt="" width={160} height={160} loading="lazy" decoding="async" className="h-full w-full rounded-lg object-cover" />
+                </button>
+              </li>
+            ))}
+          </ul>
+        )}
       </div>
 
-      {images.length > 1 && (
-        <ul className="mt-3 grid grid-cols-5 gap-2" aria-label="Ürün görselleri">
-          {images.map((im, n) => (
-            <li key={im.lg}>
-              <button type="button" onClick={() => setI(n)} aria-label={`Görsel ${n + 1}`} aria-current={n === i ? "true" : undefined}
-                className={`relative block aspect-square w-full overflow-hidden rounded-2xl bg-white p-1 shadow-sm ring-offset-2 ring-offset-paper transition ${n === i ? "ring-2 ring-clay" : "opacity-80 hover:opacity-100"}`}>
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={im.sm} alt="" width={160} height={160} loading="lazy" decoding="async" className="h-full w-full rounded-xl object-cover" />
-              </button>
-            </li>
-          ))}
-        </ul>
-      )}
-
-      <dialog ref={dlg} aria-label={`${name} — büyük görsel`} onClose={() => setZoom(false)}
+      <dialog ref={dlg} aria-label={`${name} — büyük görsel`} onClose={() => { setZoom(false); setHold(false); }}
         className="m-0 h-dvh max-h-none w-screen max-w-none bg-ink/95 p-0 text-paper backdrop:bg-ink/80">
         <div className="relative flex h-full w-full items-center justify-center overflow-hidden">
           {/* eslint-disable-next-line @next/next/no-img-element */}

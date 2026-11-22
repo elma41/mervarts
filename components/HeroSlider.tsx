@@ -4,6 +4,11 @@ import { useCallback, useEffect, useRef, useState } from "react";
 
 export type HeroSlide = { slug: string; name: string; category: string; price: string; buy: string | null; src: string; srcSet?: string; alt: string };
 
+/** Çerçeve, resmin gerçek oranına uysun (beyaz boşluk kalmasın). */
+function fitRatio(el: HTMLImageElement | null) {
+  if (el && el.complete && el.naturalWidth) el.style.aspectRatio = `${el.naturalWidth} / ${el.naturalHeight}`;
+}
+
 /** Ürünlerin yana kayarak değiştiği tam genişlikte giriş alanı. Kütüphane yok. */
 export default function HeroSlider({ slides }: { slides: HeroSlide[] }) {
   const [i, setI] = useState(0);
@@ -47,7 +52,8 @@ export default function HeroSlider({ slides }: { slides: HeroSlide[] }) {
               </div>
               <Link href={`/urun/${s.slug}`} className="hs-frame" tabIndex={d === 0 ? 0 : -1} aria-label={`${s.name} eserini incele`}>
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={s.src} srcSet={s.srcSet} sizes="(min-width:1024px) 40vw, 70vw" width={1600} height={2000} alt={s.alt} fetchPriority={k === 0 ? "high" : "low"} loading={k === 0 ? "eager" : "lazy"} decoding="async" />
+                <img src={s.src} srcSet={s.srcSet} sizes="(min-width:1024px) 40vw, 70vw" width={1600} height={2000} alt={s.alt}
+                  ref={fitRatio} onLoad={(e) => fitRatio(e.currentTarget)} fetchPriority={k === 0 ? "high" : "low"} loading={k === 0 ? "eager" : "lazy"} decoding="async" />
               </Link>
             </div>
           </div>

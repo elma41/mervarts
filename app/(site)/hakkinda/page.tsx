@@ -14,6 +14,9 @@ export const metadata: Metadata = {
 export default async function Page() {
   const [s, products] = await Promise.all([getSettings(), getProducts({ limit: 12 })]);
   const works = products.filter((p) => sortImages(p.product_images)[0]).slice(0, 3);
+  const withImg = products.filter((p) => sortImages(p.product_images)[0]);
+  const side = withImg[3] ?? withImg[0];
+  const sideIm = side ? productImage(sortImages(side.product_images)[0].path) : null;
   const paras = s.about_text?.trim()
     ? s.about_text.split(/\n{2,}|\n/).filter(Boolean)
     : [
@@ -34,7 +37,22 @@ export default async function Page() {
           <a href={s.instagram_url} target="_blank" rel="noopener" className="btn btn-ghost">Instagram&apos;da takip edin</a>
         </div>
       </article>
-      <div className="relative mx-auto aspect-[4/5] w-full max-w-[440px] text-ink"><HeroHat className="absolute inset-0 h-full w-full overflow-visible" /></div>
+      <div className="relative mx-auto w-full max-w-[460px] self-start">
+        <div className="pointer-events-none absolute -right-6 -top-6 h-40 w-40 text-gold opacity-60" aria-hidden="true"><HeroHat className="h-full w-full overflow-visible" /></div>
+        {side && sideIm ? (
+          <Link href={`/urun/${side.slug}`} className="group relative block">
+            <div className="frame">
+              <div className="card-media aspect-[4/5]">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img className="img-main h-full w-full object-cover" src={sideIm.sm} srcSet={sideIm.srcSet} sizes="(min-width:768px) 40vw, 90vw" width={640} height={800} alt={sortImages(side.product_images)[0].alt || side.name} loading="eager" decoding="async" />
+              </div>
+            </div>
+            <p className="mt-4 font-display text-2xl group-hover:text-cobalt">{side.name}</p>
+          </Link>
+        ) : (
+          <div className="relative aspect-[4/5] w-full text-ink"><HeroHat className="absolute inset-0 h-full w-full overflow-visible" /></div>
+        )}
+      </div>
     </div>
 
     {works.length > 0 && (

@@ -45,7 +45,7 @@ export default function Gallery({ images, name }: { images: Img[]; name: string 
         <button
           type="button"
           onClick={() => { setHold(true); dlg.current?.showModal(); }}
-          className="relative block h-[min(60dvh,620px)] w-full cursor-zoom-in overflow-hidden rounded-xl bg-paper-2"
+          className="relative block h-[clamp(260px,calc(100dvh-340px),620px)] w-full cursor-zoom-in overflow-hidden rounded-xl bg-paper-2"
           aria-label={`${name} görselini büyüt (${i + 1}/${images.length})`}
         >
           {images.map((im, n) => (

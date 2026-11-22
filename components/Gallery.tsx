@@ -52,7 +52,7 @@ export default function Gallery({ images, name }: { images: Img[]; name: string 
             // eslint-disable-next-line @next/next/no-img-element
             <img key={im.lg} src={im.lg} srcSet={im.srcSet} sizes="(min-width:1024px) 50vw, 100vw" width={1600} height={2000} alt={im.alt}
               loading={n === 0 ? "eager" : "lazy"} decoding="async"
-              className={`absolute inset-0 h-full w-full object-contain transition-opacity duration-700 ${n === i ? "opacity-100" : "opacity-0"}`} />
+              className={`absolute inset-0 h-full w-full object-cover object-center transition-opacity duration-700 ${n === i ? "opacity-100" : "opacity-0"}`} />
           ))}
           <span className="absolute bottom-3 right-3 flex h-9 w-9 items-center justify-center rounded-full bg-paper/90 text-ink shadow" aria-hidden="true"><IconZoom /></span>
         </button>

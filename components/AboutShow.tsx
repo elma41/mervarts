@@ -15,10 +15,10 @@ export default function AboutShow({ items }: { items: ShowItem[] }) {
 
   return (
     <div className="relative mx-auto w-full max-w-[520px] self-start">
-      <svg className="pointer-events-none absolute -inset-8 h-[calc(100%+4rem)] w-[calc(100%+4rem)] overflow-hidden" viewBox="0 0 560 700" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+      <svg className="pointer-events-none absolute -inset-8 h-[calc(100%+4rem)] w-[calc(100%+4rem)] overflow-visible" viewBox="0 0 560 700" preserveAspectRatio="none" aria-hidden="true" focusable="false">
         <g fill="none" strokeLinecap="round">
-          <path className="flow-line text-navy" pathLength={1} strokeWidth="5" style={{ ["--d" as string]: "9s" }} d="M14 60 C 6 300, 20 500, 110 630 C 190 730, 380 712, 540 676" />
-          <path className="flow-line text-navy" pathLength={1} strokeWidth="1.4" style={{ ["--d" as string]: "11s", ["--delay" as string]: "-3s" }} d="M34 86 C 26 320, 44 520, 132 650 C 214 748, 400 730, 548 700" />
+          <path className="flow-line text-navy" pathLength={1} strokeWidth="5" style={{ ["--d" as string]: "9s" }} d="M12 40 C 6 250, 10 450, 14 600 C 18 664, 60 684, 140 686 C 300 690, 420 688, 546 664" />
+          <path className="flow-line text-navy" pathLength={1} strokeWidth="1.4" style={{ ["--d" as string]: "11s", ["--delay" as string]: "-3s" }} d="M70 694 C 240 698, 420 696, 548 678" />
           <path className="flow-line text-gold" pathLength={1} strokeWidth="2" style={{ ["--d" as string]: "8s", ["--delay" as string]: "-2s" }} d="M360 18 C 450 -8 548 36 540 108 C 534 160 470 158 476 116 C 480 88 514 94 512 116" />
           <path className="flow-line text-gold" pathLength={1} strokeWidth="1.6" style={{ ["--d" as string]: "10s", ["--delay" as string]: "-5s" }} d="M548 330 C 520 420, 556 520, 520 610" />
         </g>

@@ -17,14 +17,14 @@ export default async function Page() {
   return (
     <div className="mx-auto grid max-w-7xl gap-12 px-5 pt-12 sm:px-8 lg:grid-cols-[.9fr_1.1fr]">
       <header>
-        <h1 className="font-display text-6xl leading-[.95] sm:text-7xl">Aklındaki parçayı <em className="text-cobalt">birlikte</em> yapalım.</h1>
-        <p className="mt-4 text-lg text-earth">
+        <h1 className="font-display text-6xl font-semibold leading-[.95] sm:text-7xl xl:text-8xl">Aklındaki parçayı <em className="text-cobalt">birlikte</em> yapalım.</h1>
+        <p className="mt-6 text-xl font-medium leading-relaxed text-ink/90 sm:text-2xl">
           Bir isim, bir tarih, bir renk paleti ya da bir fotoğraf… Formu doldurun; ölçü, malzeme ve teslim süresine göre size özel fiyat iletelim.
         </p>
-        <ol className="mt-8 space-y-4 border-l border-line pl-6">
-          <li><strong className="font-display text-lg">1. Talep</strong><p className="text-earth">Formu gönderin ya da WhatsApp&apos;tan yazın.</p></li>
-          <li><strong className="font-display text-lg">2. Teklif ve onay</strong><p className="text-earth">Fiyat, süre ve gerekirse taslak paylaşılır.</p></li>
-          <li><strong className="font-display text-lg">3. Üretim ve teslim</strong><p className="text-earth">Ödeme Shopier üzerinden alınır, parça elde hazırlanıp gönderilir.</p></li>
+        <ol className="mt-10 space-y-7 border-l-2 border-clay/40 pl-7">
+          <li><strong className="font-display text-3xl font-semibold text-clay-dark">1. Talep</strong><p className="mt-1 text-xl leading-snug text-ink/85">Formu gönderin ya da WhatsApp&apos;tan yazın.</p></li>
+          <li><strong className="font-display text-3xl font-semibold text-clay-dark">2. Teklif ve onay</strong><p className="mt-1 text-xl leading-snug text-ink/85">Fiyat, süre ve gerekirse taslak paylaşılır.</p></li>
+          <li><strong className="font-display text-3xl font-semibold text-clay-dark">3. Üretim ve teslim</strong><p className="mt-1 text-xl leading-snug text-ink/85">Ödeme Shopier üzerinden alınır, parça elde hazırlanıp gönderilir.</p></li>
         </ol>
         {wa && <a href={wa} target="_blank" rel="noopener" className="btn btn-wa mt-8"><IconWhatsApp /> WhatsApp ile yazın</a>}
       </header>

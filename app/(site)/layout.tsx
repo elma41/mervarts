@@ -3,6 +3,7 @@ import Footer from "@/components/Footer";
 import Reveal from "@/components/Reveal";
 import Motion from "@/components/Motion";
 import FloatingContact from "@/components/FloatingContact";
+import ScrollButtons from "@/components/ScrollButtons";
 import JsonLd from "@/components/JsonLd";
 import { getCategories, getSettings } from "@/lib/data";
 import { SITE_URL } from "@/lib/config";
@@ -18,6 +19,7 @@ export default async function SiteLayout({ children }: { children: React.ReactNo
       <main id="icerik">{children}</main>
       <Footer s={s} categories={categories} />
       <FloatingContact s={s} />
+      <ScrollButtons />
       <Reveal />
       <Motion />
       <JsonLd

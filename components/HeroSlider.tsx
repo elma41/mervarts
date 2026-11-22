@@ -40,7 +40,6 @@ export default function HeroSlider({ slides }: { slides: HeroSlide[] }) {
               <div className="hs-copy">
                 <p className="hs-cat">{s.category}</p>
                 <p className="hs-name">{s.name}</p>
-                <p className="hs-price">{s.price}</p>
                 <div className="hs-btns">
                   <Link href={`/urun/${s.slug}`} className="hs-btn hs-btn-ghost" tabIndex={d === 0 ? 0 : -1}>Eseri incele</Link>
                   {s.buy && <a href={s.buy} target="_blank" rel="noopener" className="hs-btn hs-btn-buy" tabIndex={d === 0 ? 0 : -1}>Shopier&apos;de satın al</a>}

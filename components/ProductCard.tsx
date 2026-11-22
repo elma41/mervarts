@@ -28,7 +28,7 @@ export default function ProductCard({ p, priority = false, sizes }: { p: Product
             ) : (
               <span className="absolute inset-0 flex items-center justify-center text-sm text-earth">Fotoğraf yakında</span>
             )}
-            {p.is_sold_out && <span className="absolute left-0 top-3 bg-ink px-2.5 py-1 text-xs font-semibold text-white">Satıldı</span>}
+            {p.is_sold_out && <span className="absolute left-0 top-3 bg-ink px-2.5 py-1 text-xs font-semibold text-[#14121c]">Satıldı</span>}
           </div>
         </div>
         <div className="mt-4 flex items-baseline justify-between gap-4">

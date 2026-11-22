@@ -5,19 +5,33 @@ export function HeroHat({ className = "" }: { className?: string }) {
   return (
     <svg viewBox="0 0 720 840" className={className} aria-hidden="true" focusable="false" overflow="visible">
       {/* kalın uç: kamış kalemin geniş darbesi, eserin sol ve alt kenarını sarar */}
-      <path className="ink-line draw text-navy" pathLength={1} strokeWidth="8" style={{ ["--d" as string]: "3s", ["--delay" as string]: ".2s" }}
+      <path className="ink-line draw text-ink" pathLength={1} strokeWidth="8" style={{ ["--d" as string]: "3s", ["--delay" as string]: ".2s" }}
         d="M-420 852 C -200 866, -60 840, -34 640 C -20 480, -44 300, -14 120" />
-      <path className="ink-line draw text-navy" pathLength={1} strokeWidth="1.6" style={{ ["--d" as string]: "3.4s", ["--delay" as string]: ".5s" }}
+      <path className="ink-line draw text-ink" pathLength={1} strokeWidth="1.6" style={{ ["--d" as string]: "3.4s", ["--delay" as string]: ".5s" }}
         d="M-420 870 C -180 884, -34 860, 4 660 C 30 500, -6 320, 18 150" />
-      <path className="ink-line draw text-navy" pathLength={1} strokeWidth="8" style={{ ["--d" as string]: "2.4s", ["--delay" as string]: "1.4s" }}
+      <path className="ink-line draw text-ink" pathLength={1} strokeWidth="8" style={{ ["--d" as string]: "2.4s", ["--delay" as string]: "1.4s" }}
         d="M-34 640 C 0 880, 300 900, 520 888 S 720 870, 760 740" />
       {/* altın tezhip dalı: sağ üst köşede kıvrılır */}
       <path className="ink-line draw text-gold" pathLength={1} strokeWidth="1.8" style={{ ["--d" as string]: "3.4s", ["--delay" as string]: "1.2s" }}
         d="M560 24 C 660 -30, 770 20, 742 110 C 718 182, 626 168, 640 104 C 650 62, 708 70, 700 108" />
       <path className="ink-line draw text-gold" pathLength={1} strokeWidth="1.8" style={{ ["--d" as string]: "3s", ["--delay" as string]: "2s" }}
         d="M-14 120 C -40 56, 20 -8, 96 12 C 150 26, 146 84, 104 80" />
-      <circle className="fade-in" cx="760" cy="740" r="8" fill="#7a1f33" style={{ ["--delay" as string]: "3.6s" }} />
-      <circle className="fade-in" cx="-14" cy="120" r="5" fill="#b08a2e" style={{ ["--delay" as string]: "2.8s" }} />
+      <circle className="fade-in" cx="760" cy="740" r="8" fill="#d8b660" style={{ ["--delay" as string]: "3.6s" }} />
+      <circle className="fade-in" cx="-14" cy="120" r="5" fill="#f3ead6" style={{ ["--delay" as string]: "2.8s" }} />
+    </svg>
+  );
+}
+
+/** Tam ekran girişte fotoğrafın üstünden geçen altın hat. */
+export function HeroSwash({ className = "" }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" className={className} aria-hidden="true" focusable="false">
+      <path className="ink-line draw text-gold" pathLength={1} strokeWidth="5" opacity=".9" style={{ ["--d" as string]: "3.6s", ["--delay" as string]: ".4s" }}
+        d="M-40 760 C 220 640, 330 880, 640 760 S 1000 520, 1480 640" />
+      <path className="ink-line draw text-gold" pathLength={1} strokeWidth="1.4" style={{ ["--d" as string]: "4s", ["--delay" as string]: ".8s" }}
+        d="M-40 790 C 240 680, 360 910, 660 790 S 1020 560, 1480 670" />
+      <path className="ink-line draw text-ink" pathLength={1} strokeWidth="1.2" opacity=".6" style={{ ["--d" as string]: "3s", ["--delay" as string]: "1.6s" }}
+        d="M1180 90 C 1300 40, 1420 120, 1380 210 C 1344 290, 1236 262, 1262 190 C 1280 144, 1340 160, 1326 204" />
     </svg>
   );
 }

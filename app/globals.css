@@ -213,7 +213,7 @@ body {
 /* ================= Gece galerisi sahneleri ================= */
 .grade { filter: saturate(1.08) contrast(1.06) brightness(.92) sepia(.12); }
 
-.hero-shell { position: relative; height: 100svh; min-height: 640px; margin-top: -88px; overflow: hidden; background: #0a0910; }
+.hero-shell { position: relative; height: calc(100svh - 124px); min-height: 520px; margin-top: 0; overflow: hidden; background: #3a1220; }
 .slide { position: absolute; inset: 0; opacity: 0; visibility: hidden; }
 .slide:first-child { opacity: 1; visibility: visible; }
 .slide img.bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
@@ -335,3 +335,26 @@ body:has(.slider[data-tone="dark"]) header nav[aria-label="Mobil menü"] { --col
 
 .sl-title[data-long="true"] { font-size: clamp(2.6rem, 7.4vw, 7.6rem); top: 15%; }
 @media (max-width: 1023px) { .badge-spin { display: none; } .sl-title[data-long="true"] { font-size: clamp(2.4rem, 11vw, 4rem); } }
+
+/* ===== Üst şerit, logo, Shopier düğmesi ===== */
+.topbar { background: #3a1220; color: #fffdf8; font-size: .875rem; font-weight: 500; }
+.topbar > div { min-height: 40px; }
+.topbar p { margin: 0; }
+.topbar a { color: #f3d98f; font-weight: 600; text-decoration: underline; text-underline-offset: 3px; }
+.topbar a:hover { color: #fff; }
+.nav-link { position: relative; }
+.nav-link::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 2px; background: var(--color-cobalt); transform: scaleX(0); transition: transform .3s var(--ease-soft); }
+.nav-link:hover::after { transform: scaleX(1); }
+.shopier-btn { display: inline-flex; align-items: center; gap: .55rem; padding: .7rem 1.25rem; min-height: 44px; border-radius: 999px; background: #1a1a1a; color: #fff; font-weight: 700; font-size: .95rem; box-shadow: 0 6px 16px -8px rgba(0,0,0,.5); transition: transform .2s, background .2s; }
+.shopier-btn:hover { background: #7a1f33; transform: translateY(-1px); }
+.shopier-btn svg { color: #8be4cf; }
+
+/* ===== Kart mikro etkileşimleri ===== */
+.group .frame { background: #fff; transition: background-color .5s var(--ease-soft), box-shadow .6s var(--ease-soft), transform .6s var(--ease-soft); }
+.group:hover .frame { background: #f4e9d2; }
+.card-media img.img-main { transition: transform .9s var(--ease-soft), opacity .6s var(--ease-soft); }
+.group:hover .card-media img.img-main, .group:focus-within .card-media img.img-main { transform: scale(1.06); }
+.card-media .img-alt { transition: opacity .6s var(--ease-soft), transform 1.2s var(--ease-soft); transform: scale(1.04); }
+.group:hover .card-media .img-alt { transform: scale(1.1); }
+.card-buy { display: flex; align-items: center; justify-content: center; margin-top: .75rem; min-height: 44px; border-radius: 999px; background: #1a1a1a; color: #fff; font-weight: 700; font-size: .9rem; transition: background .2s, transform .2s; }
+.card-buy:hover { background: #7a1f33; transform: translateY(-1px); }

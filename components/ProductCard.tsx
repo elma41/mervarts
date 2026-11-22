@@ -41,6 +41,9 @@ export default function ProductCard({ p, priority = false, sizes }: { p: Product
           </p>
         </div>
       </Link>
+      {!p.is_sold_out && p.shopier_url && p.pricing_mode === "fixed" && (
+        <a href={p.shopier_url} target="_blank" rel="noopener" className="card-buy" aria-label={`${p.name} için Shopier'de satın al`}>Shopier&apos;de satın al</a>
+      )}
     </article>
   );
 }

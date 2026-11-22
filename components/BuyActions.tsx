@@ -25,7 +25,7 @@ export default function BuyActions({
   return (
     <div className="flex flex-col gap-3 sm:flex-row">
       {canBuy && shopierUrl ? (
-        <a href={shopierUrl} target="_blank" rel="noopener" onClick={() => track(productId, "shopier_click")} className="btn btn-primary flex-1 !min-h-[54px] text-base">
+        <a href={shopierUrl} target="_blank" rel="noopener" onClick={() => track(productId, "shopier_click")} className="shopier-btn flex-1 justify-center !min-h-[54px] text-base">
           <IconBag /> Shopier&apos;den satın al
         </a>
       ) : (

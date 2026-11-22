@@ -1,19 +1,13 @@
 import type { SiteSettings } from "@/lib/types";
-import { IconInstagram, IconWhatsApp } from "./Icons";
+import { IconWhatsApp } from "./Icons";
 
+/** Yalnızca WhatsApp numarası girildiyse görünen tek, sade iletişim butonu. */
 export default function FloatingContact({ s }: { s: SiteSettings }) {
+  if (!s.whatsapp_number) return null;
   return (
-    <div className="fixed bottom-5 right-5 z-30 flex flex-col gap-3">
-      <a href={s.instagram_url} target="_blank" rel="noopener" aria-label="Instagram'da merv.arts"
-        className="wiggle flex h-13 w-13 h-[52px] w-[52px] items-center justify-center rounded-full border-[2.5px] border-ink bg-pink text-ink shadow-[3px_3px_0_#1e1233]">
-        <IconInstagram />
-      </a>
-      {s.whatsapp_number && (
-        <a href={`https://wa.me/${s.whatsapp_number}?text=${encodeURIComponent("Merhaba, merv.arts ürünleri hakkında bilgi almak istiyorum.")}`} target="_blank" rel="noopener" aria-label="WhatsApp ile yazın"
-          className="wiggle flex h-[52px] w-[52px] items-center justify-center rounded-full border-[2.5px] border-ink bg-[#25d366] text-ink shadow-[3px_3px_0_#1e1233]">
-          <IconWhatsApp className="h-6 w-6" />
-        </a>
-      )}
-    </div>
+    <a href={`https://wa.me/${s.whatsapp_number}?text=${encodeURIComponent("Merhaba, merv.arts eserleri hakkında bilgi almak istiyorum.")}`} target="_blank" rel="noopener" aria-label="WhatsApp ile yazın"
+      className="fixed bottom-5 right-5 z-30 flex h-14 w-14 items-center justify-center rounded-full bg-[#1f6f46] text-white shadow-lg transition-transform hover:-translate-y-0.5">
+      <IconWhatsApp className="h-6 w-6" />
+    </a>
   );
 }

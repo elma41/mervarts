@@ -6,7 +6,7 @@ export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: { default: "Merve Türkdönmez · merv.arts — El emeği sanat ürünleri", template: "%s · merv.arts" },
   description:
-    "Merve Türkdönmez'in elde ürettiği özgün tablolar, seramikler, takılar ve hediyelikler. Tek ürün, kişiye özel sipariş, Shopier ile güvenli alışveriş.",
+    "Merve Türkdönmez tezhip ve hat işleri: Esmâ-ül Hüsnâ levhaları, kişiye özel harf tabloları, gül ve rokoko süslemeleri. Tek eser, kişiye özel sipariş, Shopier ile güvenli alışveriş.",
   applicationName: "merv.arts",
   authors: [{ name: "Merve Türkdönmez" }],
   creator: "Merve Türkdönmez",
@@ -22,7 +22,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#fff7ee",
+  themeColor: "#f6f1e6",
   width: "device-width",
   initialScale: 1,
 };
@@ -31,8 +31,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="tr" suppressHydrationWarning>
       <head>
-        <link rel="preload" href="/fonts/bricolage-grotesque-latin-wght-normal.woff2" as="font" type="font/woff2" crossOrigin="anonymous" />
-        <link rel="preload" href="/fonts/manrope-latin-wght-normal.woff2" as="font" type="font/woff2" crossOrigin="anonymous" />
+        <link rel="preload" href="/fonts/cormorant-garamond-latin-500-normal.woff2" as="font" type="font/woff2" crossOrigin="anonymous" />
+        <link rel="preload" href="/fonts/inter-tight-latin-wght-normal.woff2" as="font" type="font/woff2" crossOrigin="anonymous" />
         <script dangerouslySetInnerHTML={{ __html: "document.documentElement.classList.add('js')" }} />
       </head>
       <body className="min-h-screen">{children}</body>

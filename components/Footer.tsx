@@ -1,62 +1,51 @@
 import Link from "next/link";
 import type { SiteSettings, Category } from "@/lib/types";
-import { IconInstagram, IconBag, IconWhatsApp } from "./Icons";
-import { Sparkle } from "./Art";
+import { Logo } from "./Header";
 
 export default function Footer({ s, categories }: { s: SiteSettings; categories: Category[] }) {
   const year = new Date().getFullYear();
   return (
-    <footer className="relative mt-28 overflow-hidden bg-ink text-paper">
-      <div className="dots-light absolute inset-0 opacity-60" aria-hidden="true" />
-      <div className="relative mx-auto max-w-7xl px-5 pt-16 sm:px-8">
-        <div className="grid gap-12 md:grid-cols-[1.4fr_1fr_1fr]">
-          <div>
-            <p className="font-display text-3xl leading-tight sm:text-4xl">
-              Aklındaki parçayı <span className="hl text-ink" style={{ ["--hl" as string]: "#ff4f8b" }}>birlikte</span> yapalım.
-            </p>
-            <div className="mt-6 flex flex-wrap gap-3">
-              <a href={s.instagram_url} target="_blank" rel="noopener" className="btn btn-sun !shadow-[4px_4px_0_#ff4f8b]"><IconInstagram /> @merv.arts</a>
-              {s.whatsapp_number && (
-                <a href={`https://wa.me/${s.whatsapp_number}`} target="_blank" rel="noopener" className="btn btn-wa !shadow-[4px_4px_0_#ff4f8b]"><IconWhatsApp /> WhatsApp</a>
-              )}
-              <a href={s.shopier_url} target="_blank" rel="noopener" className="btn btn-ghost !shadow-[4px_4px_0_#ff4f8b]"><IconBag /> Shopier</a>
-            </div>
-          </div>
-
-          <nav aria-label="Koleksiyon">
-            <h2 className="mb-4 text-sm font-extrabold uppercase tracking-[0.2em] text-sun">Koleksiyon</h2>
-            <ul className="space-y-2.5 text-lg">
-              <li><Link className="hover:text-pink" href="/urunler">Tüm ürünler</Link></li>
-              {categories.map((c) => (
-                <li key={c.id}><Link className="hover:text-pink" href={`/urunler/kategori/${c.slug}`}>{c.name}</Link></li>
-              ))}
-              <li><Link className="hover:text-pink" href="/ozel-siparis">Özel sipariş</Link></li>
-            </ul>
-          </nav>
-
-          <nav aria-label="Bilgi">
-            <h2 className="mb-4 text-sm font-extrabold uppercase tracking-[0.2em] text-sun">Bilgi</h2>
-            <ul className="space-y-2.5 text-lg">
-              <li><Link className="hover:text-pink" href="/hakkinda">Hikâye</Link></li>
-              <li><Link className="hover:text-pink" href="/iletisim">İletişim</Link></li>
-              <li><Link className="hover:text-pink" href="/iletisim#oneri">Öneri / Şikayet</Link></li>
-              <li><Link className="hover:text-pink" href="/kvkk">KVKK Aydınlatma Metni</Link></li>
-              <li><Link className="hover:text-pink" href="/gizlilik-politikasi">Gizlilik Politikası</Link></li>
-              <li><Link className="hover:text-pink" href="/cerez-politikasi">Çerez Politikası</Link></li>
-            </ul>
-          </nav>
+    <footer className="mt-32 border-t border-line">
+      <div className="mx-auto grid max-w-[1440px] gap-12 px-5 py-16 sm:px-10 lg:grid-cols-[1.5fr_1fr_1fr_1fr] lg:px-14">
+        <div>
+          <Logo s={s} />
+          <p className="mt-4 max-w-[34ch] text-earth">{s.tagline}. Her eser tek tek, atölyede elde yapılır.</p>
+          <Link href="/ozel-siparis" className="btn btn-primary mt-6">Size özel yaptırın</Link>
         </div>
 
-        <div className="relative mt-16 select-none" aria-hidden="true">
-          <p className="font-display text-[17.5vw] leading-[0.8] tracking-[-0.06em] text-paper sm:text-[17vw] xl:text-[15rem]">
-            merv<span className="text-pink">●</span>arts
-          </p>
-          <Sparkle className="bob absolute right-[6%] top-[-10%] h-16 w-16 sm:h-24 sm:w-24" fill="#ffd23f" />
-          <Sparkle className="bob-2 absolute left-[42%] top-[-18%] h-10 w-10 sm:h-14 sm:w-14" fill="#2bd4a8" />
-        </div>
+        <nav aria-label="Koleksiyon">
+          <h2 className="mb-4 font-display text-lg">Koleksiyon</h2>
+          <ul className="space-y-2.5">
+            <li><Link className="hover:text-cobalt" href="/urunler">Tüm eserler</Link></li>
+            {categories.map((c) => (
+              <li key={c.id}><Link className="hover:text-cobalt" href={`/urunler/kategori/${c.slug}`}>{c.name}</Link></li>
+            ))}
+          </ul>
+        </nav>
+
+        <nav aria-label="Atölye">
+          <h2 className="mb-4 font-display text-lg">Atölye</h2>
+          <ul className="space-y-2.5">
+            <li><Link className="hover:text-cobalt" href="/hakkinda">Merve Türkdönmez</Link></li>
+            <li><Link className="hover:text-cobalt" href="/iletisim">İletişim</Link></li>
+            <li><Link className="hover:text-cobalt" href="/iletisim#oneri">Öneri ve şikayet</Link></li>
+            <li><a className="hover:text-cobalt" href={s.instagram_url} target="_blank" rel="noopener">Instagram</a></li>
+            <li><a className="hover:text-cobalt" href={s.shopier_url} target="_blank" rel="noopener">Shopier mağazası</a></li>
+            {s.whatsapp_number && <li><a className="hover:text-cobalt" href={`https://wa.me/${s.whatsapp_number}`} target="_blank" rel="noopener">WhatsApp</a></li>}
+          </ul>
+        </nav>
+
+        <nav aria-label="Yasal">
+          <h2 className="mb-4 font-display text-lg">Yasal</h2>
+          <ul className="space-y-2.5">
+            <li><Link className="hover:text-cobalt" href="/kvkk">KVKK aydınlatma metni</Link></li>
+            <li><Link className="hover:text-cobalt" href="/gizlilik-politikasi">Gizlilik politikası</Link></li>
+            <li><Link className="hover:text-cobalt" href="/cerez-politikasi">Çerez politikası</Link></li>
+          </ul>
+        </nav>
       </div>
-      <div className="relative border-t border-paper/20">
-        <p className="mx-auto max-w-7xl px-5 py-5 text-sm text-paper/80 sm:px-8">© {year} {s.brand_name} · @merv.arts · Elde, sevgiyle yapıldı.</p>
+      <div className="border-t border-line">
+        <p className="mx-auto max-w-[1440px] px-5 py-6 text-sm text-earth sm:px-10 lg:px-14">© {year} {s.brand_name}. Tüm hakları saklıdır.</p>
       </div>
     </footer>
   );

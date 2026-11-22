@@ -50,17 +50,17 @@ export default function QuoteForm({ productId, productName }: { productId?: stri
   }
 
   return (
-    <form onSubmit={onSubmit} onFocusCapture={ensure} onPointerDownCapture={ensure} className="relative grid gap-4">
+    <form onSubmit={onSubmit} onFocusCapture={ensure} onPointerDownCapture={ensure} className="relative grid gap-3">
       {productName && (
-        <p className="rounded-2xl bg-paper-2 px-4 py-3 text-sm">İlgili ürün: <strong>{productName}</strong></p>
+        <p className="rounded-xl bg-paper-2 px-3 py-2 text-[13px]">İlgili ürün: <strong>{productName}</strong></p>
       )}
-      <div className="grid gap-x-8 gap-y-4 md:grid-cols-2">
-        <div className="grid content-start gap-4">
+      <div className="grid gap-x-8 gap-y-3 md:grid-cols-2">
+        <div className="grid content-start gap-3">
           <div>
             <label htmlFor="q-name" className="field-label">Ad Soyad *</label>
             <input id="q-name" name="name" className="field" required minLength={2} maxLength={100} autoComplete="name" />
           </div>
-          <div className="grid gap-4 sm:grid-cols-2">
+          <div className="grid gap-3 sm:grid-cols-2">
             <div>
               <label htmlFor="q-phone" className="field-label">Telefon</label>
               <input id="q-phone" name="phone" type="tel" className="field" minLength={7} maxLength={25} autoComplete="tel" />
@@ -70,7 +70,7 @@ export default function QuoteForm({ productId, productName }: { productId?: stri
               <input id="q-email" name="email" type="email" className="field" maxLength={160} autoComplete="email" />
             </div>
           </div>
-          <p className="-mt-2 text-xs text-earth">Telefon ya da e-postadan en az birini yazın.</p>
+          <p className="-mt-1 text-xs text-earth">Telefon ya da e-postadan en az birini yazın.</p>
           <div>
             <label htmlFor="q-dim" className="field-label">Ölçü / adet</label>
             <input id="q-dim" name="dimensions" className="field" maxLength={200} placeholder="Örn. 30×40 cm, 2 adet" />
@@ -89,7 +89,7 @@ export default function QuoteForm({ productId, productName }: { productId?: stri
         </div>
         <div className="flex flex-col">
           <label htmlFor="q-details" className="field-label">Tasarım detayı *</label>
-          <textarea id="q-details" name="details" className="field min-h-[14rem] flex-1 md:min-h-0" required minLength={10} maxLength={3000}
+          <textarea id="q-details" name="details" className="field min-h-[11rem] flex-1 md:min-h-0" required minLength={10} maxLength={3000}
             placeholder="Renkler, yazılacak isim, kullanılacak yer, teslim tarihi…" />
         </div>
       </div>

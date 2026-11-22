@@ -28,9 +28,9 @@ export default function FeedbackForm() {
   }
 
   return (
-    <form onSubmit={onSubmit} onFocusCapture={ensure} onPointerDownCapture={ensure} className="relative grid gap-4">
-      <div className="grid gap-x-8 gap-y-4 md:grid-cols-2">
-        <div className="grid content-start gap-4">
+    <form onSubmit={onSubmit} onFocusCapture={ensure} onPointerDownCapture={ensure} className="relative grid gap-3">
+      <div className="grid gap-x-8 gap-y-3 md:grid-cols-2">
+        <div className="grid content-start gap-3">
           <fieldset>
             <legend className="field-label">Bildirim türü *</legend>
             <div className="flex flex-wrap gap-2">
@@ -52,7 +52,7 @@ export default function FeedbackForm() {
         </div>
         <div className="flex flex-col">
           <label htmlFor="f-msg" className="field-label">Mesajınız *</label>
-          <textarea id="f-msg" name="message" className="field min-h-[14rem] flex-1 md:min-h-0" required minLength={10} maxLength={3000} />
+          <textarea id="f-msg" name="message" className="field min-h-[11rem] flex-1 md:min-h-0" required minLength={10} maxLength={3000} />
         </div>
       </div>
       <Guard ch={ch} chErr={err} answer={answer} setAnswer={setAnswer} consent={consent} setConsent={setConsent} />

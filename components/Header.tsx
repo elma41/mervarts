@@ -60,17 +60,6 @@ export default function Header({ s }: { s: SiteSettings }) {
   const wa = s.whatsapp_number ? `https://wa.me/${s.whatsapp_number.replace(/\D/g, "")}` : null;
   return (
     <header className="relative z-40">
-      <div className="topbar">
-        <div className="mx-auto flex max-w-[1440px] items-center justify-between gap-4 px-5 sm:px-10 lg:px-14">
-          <p>El yapımı tezhip ve hat sanatı, kişiye özel sipariş alınır</p>
-          <p className="hidden items-center gap-5 sm:flex">
-            <span>Güvenli ödeme: Shopier</span>
-            {wa && <a href={wa} target="_blank" rel="noopener">WhatsApp ile sipariş</a>}
-            {s.instagram_url && <a href={s.instagram_url} target="_blank" rel="noopener">Instagram</a>}
-          </p>
-        </div>
-      </div>
-
       <div className="border-b border-line bg-mat">
         <div className="mx-auto flex h-[84px] max-w-[1440px] items-center justify-between gap-6 px-5 sm:px-10 lg:px-14">
           <Link href="/" aria-label={`${s.brand_name} ana sayfa`} className="shrink-0">

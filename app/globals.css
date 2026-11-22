@@ -213,7 +213,7 @@ body {
 /* ================= Gece galerisi sahneleri ================= */
 .grade { filter: saturate(1.08) contrast(1.06) brightness(.92) sepia(.12); }
 
-.hero-shell { position: relative; height: calc(100svh - 124px); min-height: 520px; margin-top: 0; overflow: hidden; background: #3a1220; }
+.hero-shell { position: relative; height: calc(100svh - 86px); min-height: 520px; margin-top: 0; overflow: hidden; background: #3a1220; }
 .slide { position: absolute; inset: 0; opacity: 0; visibility: hidden; }
 .slide:first-child { opacity: 1; visibility: visible; }
 .slide img.bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
@@ -377,7 +377,7 @@ body:has(.slider[data-tone="dark"]) header nav[aria-label="Mobil menü"] { --col
 .hs-btn { display: inline-flex; align-items: center; justify-content: center; min-height: 48px; padding: .75rem 1.5rem; border-radius: 999px; font-weight: 700; text-decoration: none; transition: background .2s, color .2s, transform .2s; }
 .hs-btn-ghost { border: 2px solid #fff6df; color: #fff6df; }.hs-btn-ghost:hover { background: #fff6df; color: #2a1019; }
 .hs-btn-buy { background: #e6c677; color: #1c1b2b; }.hs-btn-buy:hover { background: #f3d98f; transform: translateY(-1px); }
-.hs-frame { justify-self: center; width: min(40vw, 470px, max(240px, calc((100svh - 360px) * .8))); aspect-ratio: 4 / 5; overflow: hidden; border-radius: 26px; background: #2a1019; border: 1px solid rgba(255, 246, 223, .35); box-shadow: 0 40px 70px -28px rgba(0, 0, 0, .75), 0 0 0 8px rgba(255, 246, 223, .08); display: block; }
+.hs-frame { justify-self: center; width: min(40vw, 470px, max(240px, calc((100svh - 320px) * .8))); aspect-ratio: 4 / 5; overflow: hidden; border-radius: 26px; background: #2a1019; border: 1px solid rgba(255, 246, 223, .35); box-shadow: 0 40px 70px -28px rgba(0, 0, 0, .75), 0 0 0 8px rgba(255, 246, 223, .08); display: block; }
 .hs-frame img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 60%; transition: transform 6s ease-out; }
 .hs-slide[data-state="active"] .hs-frame img { transform: scale(1.06); }
 /* içerik, kayma sırasında hafif geriden gelir */

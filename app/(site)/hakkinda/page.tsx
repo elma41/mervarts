@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { HeroHat } from "@/components/Hat";
+import AboutShow from "@/components/AboutShow";
 import { getProducts, getSettings } from "@/lib/data";
 import { productImage, sortImages } from "@/lib/format";
 
@@ -14,9 +14,11 @@ export const metadata: Metadata = {
 export default async function Page() {
   const [s, products] = await Promise.all([getSettings(), getProducts({ limit: 12 })]);
   const works = products.filter((p) => sortImages(p.product_images)[0]).slice(0, 3);
-  const withImg = products.filter((p) => sortImages(p.product_images)[0]);
-  const side = withImg[3] ?? withImg[0];
-  const sideIm = side ? productImage(sortImages(side.product_images)[0].path) : null;
+  const show = products.filter((p) => sortImages(p.product_images)[0]).slice(0, 8).map((p) => {
+    const first = sortImages(p.product_images)[0];
+    const im = productImage(first.path);
+    return { slug: p.slug, name: p.name, src: im.sm, srcSet: im.srcSet, alt: first.alt || p.name };
+  });
   const paras = s.about_text?.trim()
     ? s.about_text.split(/\n{2,}|\n/).filter(Boolean)
     : [
@@ -27,7 +29,7 @@ export default async function Page() {
   return (
     <>
     <div className="mx-auto grid max-w-[1440px] gap-12 px-5 pt-12 sm:px-10 lg:px-14 md:grid-cols-[1.1fr_.9fr]">
-      <article>
+      <article className="relative z-10">
         <h1 className="font-display text-6xl leading-[.95] sm:text-7xl">Merve Türkdönmez</h1>
         <div className="prose-art mt-6 text-lg">
           {paras.map((t, i) => <p key={i}>{t}</p>)}
@@ -37,22 +39,7 @@ export default async function Page() {
           <a href={s.instagram_url} target="_blank" rel="noopener" className="btn btn-ghost">Instagram&apos;da takip edin</a>
         </div>
       </article>
-      <div className="relative mx-auto w-full max-w-[460px] self-start">
-        <div className="pointer-events-none absolute -right-6 -top-6 h-40 w-40 text-gold opacity-60" aria-hidden="true"><HeroHat className="h-full w-full overflow-visible" /></div>
-        {side && sideIm ? (
-          <Link href={`/urun/${side.slug}`} className="group relative block">
-            <div className="frame">
-              <div className="card-media aspect-[4/5]">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img className="img-main h-full w-full object-cover" src={sideIm.sm} srcSet={sideIm.srcSet} sizes="(min-width:768px) 40vw, 90vw" width={640} height={800} alt={sortImages(side.product_images)[0].alt || side.name} loading="eager" decoding="async" />
-              </div>
-            </div>
-            <p className="mt-4 font-display text-2xl group-hover:text-cobalt">{side.name}</p>
-          </Link>
-        ) : (
-          <div className="relative aspect-[4/5] w-full text-ink"><HeroHat className="absolute inset-0 h-full w-full overflow-visible" /></div>
-        )}
-      </div>
+      <AboutShow items={show} />
     </div>
 
     {works.length > 0 && (

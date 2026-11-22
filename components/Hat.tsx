@@ -25,8 +25,8 @@ export function HeroHat({ className = "" }: { className?: string }) {
 /** Bölümleri ayıran ince hat süsü. */
 export function HatDivider({ className = "" }: { className?: string }) {
   return (
-    <svg viewBox="0 0 1200 40" preserveAspectRatio="none" className={`h-8 w-full text-gold ${className}`} aria-hidden="true" focusable="false">
-      <path className="ink-line" strokeWidth="1.3" vectorEffect="non-scaling-stroke"
+    <svg data-draw viewBox="0 0 1200 40" preserveAspectRatio="none" className={`h-8 w-full text-gold ${className}`} aria-hidden="true" focusable="false">
+      <path className="ink-line" pathLength={1} strokeWidth="1.3"
         d="M0 20 C 120 4, 200 36, 320 20 S 500 4, 600 20 S 800 36, 900 20 S 1100 4, 1200 20" />
       <path d="M600 8 L610 20 L600 32 L590 20 Z" fill="currentColor" />
     </svg>
@@ -37,7 +37,7 @@ export function HatDivider({ className = "" }: { className?: string }) {
 export function ScrollHat() {
   return (
     <svg viewBox="0 0 100 1000" preserveAspectRatio="none" className="pointer-events-none fixed inset-y-0 right-0 z-0 hidden h-screen w-16 text-gold opacity-60 lg:block" aria-hidden="true" focusable="false">
-      <path className="ink-line scroll-draw" pathLength={1} strokeWidth="1.4" vectorEffect="non-scaling-stroke"
+      <path className="ink-line scroll-draw" pathLength={1} strokeWidth="1.4"
         d="M60 0 C 10 120, 90 220, 50 340 S 10 560, 60 680 S 90 860, 40 1000" />
     </svg>
   );

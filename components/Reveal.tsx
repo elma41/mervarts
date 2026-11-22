@@ -2,27 +2,33 @@
 import { useEffect } from "react";
 import { usePathname } from "next/navigation";
 
-/** [data-reveal] öğelerini görünür olduklarında yumuşakça belirtir. Kütüphane yok, ~0.5 KB. */
+/** [data-reveal], [data-write], [data-draw] öğelerini görünür olduklarında harekete geçirir. Kütüphane yok. */
 export default function Reveal() {
   const pathname = usePathname();
   useEffect(() => {
-    const els = Array.from(document.querySelectorAll<HTMLElement>("[data-reveal]:not(.is-visible)"));
+    const els = Array.from(document.querySelectorAll<HTMLElement>("[data-reveal]:not(.is-visible), [data-write]:not(.is-visible), [data-draw]:not(.is-visible)"));
     if (!("IntersectionObserver" in window)) {
       els.forEach((e) => e.classList.add("is-visible"));
       return;
     }
+    // Kırpılmış (clip-path) öğeler görünmez sayıldığı için bunlarda üst öğe izlenir.
+    const watch = new Map<Element, HTMLElement>();
     const io = new IntersectionObserver(
       (entries) => {
         for (const e of entries) {
           if (e.isIntersecting) {
-            e.target.classList.add("is-visible");
+            watch.get(e.target)?.classList.add("is-visible");
             io.unobserve(e.target);
           }
         }
       },
-      { rootMargin: "0px 0px -8% 0px", threshold: 0.08 },
+      { rootMargin: "0px 0px -8% 0px", threshold: 0.05 },
     );
-    els.forEach((e) => io.observe(e));
+    els.forEach((el) => {
+      const t = el.hasAttribute("data-write") && el.parentElement ? el.parentElement : el;
+      watch.set(t, el);
+      io.observe(t);
+    });
     return () => io.disconnect();
   }, [pathname]);
   return null;

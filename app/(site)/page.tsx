@@ -1,11 +1,17 @@
 import Link from "next/link";
 import ProductCard from "@/components/ProductCard";
 import ReviewBlock from "@/components/ReviewBlock";
+import HGallery from "@/components/HGallery";
 import { HatDivider, HeroHat, ScrollHat } from "@/components/Hat";
 import { getCategories, getProducts, getSettings } from "@/lib/data";
 import { price, productImage, sortImages } from "@/lib/format";
 
 export const revalidate = 60;
+
+const DUST = [
+  [8, 72, 6, 9, 0], [18, 30, 4, 11, 1.2], [30, 84, 8, 8, 2.1], [44, 18, 5, 12, .6], [52, 66, 6, 10, 3], [63, 40, 4, 9, 1.8],
+  [72, 82, 7, 13, .3], [82, 24, 5, 10, 2.6], [90, 58, 6, 11, 1.1], [24, 56, 4, 14, 3.4], [58, 10, 5, 9, 2.2], [95, 90, 4, 12, .9],
+];
 
 export default async function Home() {
   const [s, categories, featured, latest] = await Promise.all([
@@ -25,6 +31,11 @@ export default async function Home() {
 
       {/* ============ GİRİŞ ============ */}
       <section className="relative mx-auto grid max-w-[1440px] items-center gap-10 px-5 pb-20 pt-6 sm:px-10 lg:grid-cols-[1.1fr_.9fr] lg:px-14 lg:pt-10">
+        <div aria-hidden="true" className="pointer-events-none absolute inset-0 overflow-hidden">
+          {DUST.map(([x, y, z, t, d], i) => (
+            <span key={i} className="dust" style={{ left: `${x}%`, top: `${y}%`, width: z * 3, height: z * 3, ["--t" as string]: `${t}s`, ["--dl" as string]: `${d}s` }} />
+          ))}
+        </div>
         <div className="relative z-10">
           <h1 className="font-display text-[3.4rem] leading-[.95] sm:text-7xl lg:text-[6.4rem]">
             <span className="rise block" style={{ ["--delay" as string]: ".1s" }}>Kalemle,</span>
@@ -46,10 +57,10 @@ export default async function Home() {
           {hero && heroSrc && (
             <Link href={`/urun/${hero.slug}`} className="group relative z-10 block rotate-[1.2deg] transition-transform duration-700 hover:rotate-0">
               <div className="frame fade-in" style={{ ["--delay" as string]: ".6s" }}>
-                <div className="frame-art aspect-[4/5]">
+                <div className="frame-art aspect-[4/5]"><div className="unveil h-full w-full">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={heroSrc.lg} srcSet={heroSrc.srcSet} sizes="(min-width:1024px) 40vw, 90vw" width={1600} height={2000} alt={heroImg?.alt || hero.name} fetchPriority="high" decoding="async" />
-                </div>
+                  <img src={heroSrc.lg} srcSet={heroSrc.srcSet} sizes="(min-width:1024px) 40vw, 90vw" width={1600} height={2000} alt={heroImg?.alt || hero.name} fetchPriority="high" decoding="async" className="h-full w-full object-cover" />
+                </div></div>
               </div>
               <div className="museum-label absolute -bottom-5 right-6 fade-in" style={{ ["--delay" as string]: "1.4s" }}>
                 <b>{hero.name}</b>
@@ -63,28 +74,25 @@ export default async function Home() {
       <HatDivider className="mx-auto max-w-[1440px] px-5 sm:px-10 lg:px-14" />
 
       {/* ============ KOLEKSİYON ============ */}
-      <section aria-labelledby="koleksiyon" className="mx-auto max-w-[1440px] px-5 pt-16 sm:px-10 lg:px-14">
-        <div className="flex flex-wrap items-end justify-between gap-4">
-          <h2 id="koleksiyon" className="font-display text-5xl sm:text-6xl">Koleksiyon</h2>
-          <Link href="/urunler" className="link-line">Tüm eserler</Link>
-        </div>
-        <div className="mt-12 grid gap-x-8 gap-y-14 sm:grid-cols-2 lg:grid-cols-3">
-          {showcase.map((p, i) => (
-            <div key={p.id} className={i % 3 === 1 ? "lg:mt-16" : i % 3 === 2 ? "lg:mt-8" : ""}>
-              <ProductCard p={p} priority={i < 3} />
-            </div>
-          ))}
-        </div>
-      </section>
+      <HGallery title="Koleksiyon" action={<Link href="/urunler" className="link-line">Tüm eserler</Link>}>
+        {showcase.map((p, i) => (
+          <div key={p.id} className={i % 2 === 1 ? "lg:mt-24" : ""}>
+            <ProductCard p={p} priority={i < 3} />
+          </div>
+        ))}
+        <Link href="/urunler" className="group/end flex min-h-[320px] items-center justify-center self-center text-center">
+          <span className="font-display text-4xl italic text-cobalt transition-transform duration-500 group-hover/end:translate-x-2 sm:text-5xl">Tüm eserler</span>
+        </Link>
+      </HGallery>
 
       {/* ============ KATEGORİLER ============ */}
       {categories.length > 0 && (
         <section aria-labelledby="turler" className="mx-auto mt-28 max-w-[1440px] px-5 sm:px-10 lg:px-14">
-          <h2 id="turler" className="font-display text-4xl sm:text-5xl">Eser türleri</h2>
+          <h2 id="turler" data-write className="font-display text-4xl sm:text-6xl">Eser türleri</h2>
           <ul className="mt-8 border-t border-line">
-            {categories.map((c) => (
-              <li key={c.id} className="border-b border-line">
-                <Link href={`/urunler/kategori/${c.slug}`} className="group flex items-baseline justify-between gap-6 py-6 sm:py-8">
+            {categories.map((c, i) => (
+              <li key={c.id} className="border-b border-line" data-reveal style={{ ["--delay" as string]: `${i * 0.12}s` }}>
+                <Link href={`/urunler/kategori/${c.slug}`} className="cat-row group flex items-baseline justify-between gap-6 py-6 sm:py-8">
                   <span className="font-display text-4xl transition-transform duration-500 group-hover:translate-x-3 sm:text-6xl">{c.name}</span>
                   <span className="text-cobalt transition-transform duration-500 group-hover:translate-x-1" aria-hidden="true">Görüntüle</span>
                 </Link>
@@ -96,12 +104,12 @@ export default async function Home() {
 
       {/* ============ KİŞİYE ÖZEL ============ */}
       <section aria-labelledby="ozel" className="relative mt-28 overflow-hidden bg-cobalt text-white">
-        <svg viewBox="0 0 1200 400" preserveAspectRatio="xMidYMid slice" className="absolute inset-0 h-full w-full text-gold opacity-70" aria-hidden="true" focusable="false">
-          <path className="ink-line" strokeWidth="1.5" d="M-20 300 C 200 80, 360 360, 560 200 S 900 40, 1220 220" />
-          <path className="ink-line" strokeWidth="6" opacity=".5" d="M-20 330 C 200 110, 360 390, 560 230 S 900 70, 1220 250" />
+        <svg data-draw viewBox="0 0 1200 400" preserveAspectRatio="xMidYMid slice" className="absolute inset-0 h-full w-full text-gold opacity-70" aria-hidden="true" focusable="false">
+          <path className="ink-line" pathLength={1} strokeWidth="1.5" d="M-20 300 C 200 80, 360 360, 560 200 S 900 40, 1220 220" />
+          <path className="ink-line" pathLength={1} strokeWidth="6" opacity=".5" d="M-20 330 C 200 110, 360 390, 560 230 S 900 70, 1220 250" />
         </svg>
         <div className="relative mx-auto grid max-w-[1440px] items-center gap-8 px-5 py-20 sm:px-10 lg:grid-cols-[1.4fr_1fr] lg:px-14 lg:py-28">
-          <h2 id="ozel" className="font-display text-5xl leading-[1.02] sm:text-7xl">Adınızın harfi, bir tabloda.</h2>
+          <h2 id="ozel" data-write className="font-display text-5xl leading-[1.02] sm:text-7xl">Adınızın harfi, bir tabloda.</h2>
           <div>
             <p className="max-w-[42ch] text-lg text-white/90">Harf, isim ya da bir Esmâ seçin; ölçüyü ve renkleri birlikte belirleyelim. Eser yalnızca sizin için işlenir.</p>
             <Link href="/ozel-siparis" className="btn mt-7 bg-white text-cobalt hover:bg-paper">Teklif isteyin</Link>

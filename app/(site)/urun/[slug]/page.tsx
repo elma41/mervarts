@@ -102,7 +102,7 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
       </div>
 
       <section id="teklif" aria-labelledby="teklif-baslik" className="mx-auto mt-20 max-w-3xl scroll-mt-24 px-5 sm:px-8">
-        <div className="pop-card bg-lav p-6 sm:p-10">
+        <div className="panel p-6 sm:p-10">
           <h2 id="teklif-baslik" className="font-display text-3xl">Bu parçadan size özel isteyin</h2>
           <p className="mt-2 text-earth">Farklı ölçü, renk ya da kişiselleştirme için yazın; fiyat ve süreyi iletelim.</p>
           <div className="mt-6"><QuoteForm productId={p.id} productName={p.name} /></div>

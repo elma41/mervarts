@@ -1,6 +1,7 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import Reveal from "@/components/Reveal";
+import Motion from "@/components/Motion";
 import FloatingContact from "@/components/FloatingContact";
 import JsonLd from "@/components/JsonLd";
 import { getCategories, getSettings } from "@/lib/data";
@@ -18,6 +19,7 @@ export default async function SiteLayout({ children }: { children: React.ReactNo
       <Footer s={s} categories={categories} />
       <FloatingContact s={s} />
       <Reveal />
+      <Motion />
       <JsonLd
         data={{
           "@context": "https://schema.org",

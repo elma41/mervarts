@@ -52,7 +52,7 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
 
   return (
     <>
-      <div className="mx-auto max-w-7xl px-5 pt-8 sm:px-8">
+      <div className="mx-auto max-w-[1440px] px-5 pt-8 sm:px-10 lg:px-14">
         <nav aria-label="Konum" className="text-sm text-earth">
           <ol className="flex flex-wrap gap-2">
             <li><Link href="/" className="hover:text-clay">Ana sayfa</Link> /</li>
@@ -101,7 +101,7 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
         </div>
       </div>
 
-      <section id="teklif" aria-labelledby="teklif-baslik" className="mx-auto mt-20 max-w-7xl scroll-mt-24 px-5 sm:px-8">
+      <section id="teklif" aria-labelledby="teklif-baslik" className="mx-auto mt-20 max-w-[1440px] scroll-mt-24 px-5 sm:px-10 lg:px-14">
         <div className="panel grid gap-8 p-6 sm:p-10 lg:grid-cols-[minmax(0,320px)_1fr] lg:gap-14 lg:p-14">
           <div className="lg:pt-2">
             <h2 id="teklif-baslik" className="font-display text-4xl leading-tight sm:text-5xl">Bu parçadan size özel isteyin</h2>
@@ -117,7 +117,7 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
       </section>
 
       {related.length > 0 && (
-        <section aria-labelledby="benzer-baslik" className="mx-auto mt-20 max-w-7xl px-5 sm:px-8">
+        <section aria-labelledby="benzer-baslik" className="mx-auto mt-20 max-w-[1440px] px-5 sm:px-10 lg:px-14">
           <h2 id="benzer-baslik" className="mb-8 font-display text-3xl">Bunlar da hoşunuza gidebilir</h2>
           <ul className="grid gap-x-6 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
             {related.map((r) => <li key={r.id} data-reveal><ProductCard p={r} /></li>)}

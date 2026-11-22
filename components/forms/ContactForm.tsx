@@ -32,9 +32,9 @@ export default function ContactForm() {
   }
 
   return (
-    <form onSubmit={onSubmit} onFocusCapture={ensure} onPointerDownCapture={ensure} className="relative grid gap-2.5">
-      <div className="grid gap-x-8 gap-y-2.5 md:grid-cols-2">
-        <div className="grid content-start gap-2.5">
+    <form onSubmit={onSubmit} onFocusCapture={ensure} onPointerDownCapture={ensure} className="relative grid gap-3">
+      <div className="grid gap-x-8 gap-y-3 md:grid-cols-2">
+        <div className="grid content-start gap-3">
           <div>
             <label htmlFor="c-name" className="field-label">Ad Soyad *</label>
             <input id="c-name" name="name" className="field" required minLength={2} maxLength={100} autoComplete="name" />
@@ -47,7 +47,7 @@ export default function ContactForm() {
               <option value="sergi">Sergi / etkinlik</option>
             </select>
           </div>
-          <div className="grid gap-2.5 sm:grid-cols-2">
+          <div className="grid gap-3 sm:grid-cols-2">
             <div>
               <label htmlFor="c-email" className="field-label">E-posta</label>
               <input id="c-email" name="email" type="email" className="field" maxLength={160} autoComplete="email" />
@@ -57,11 +57,11 @@ export default function ContactForm() {
               <input id="c-phone" name="phone" type="tel" className="field" minLength={7} maxLength={25} autoComplete="tel" />
             </div>
           </div>
-          <p className="-mt-1 text-[11px] text-earth">E-posta ya da telefondan en az birini yazın.</p>
+          <p className="-mt-1 text-xs text-earth">E-posta ya da telefondan en az birini yazın.</p>
         </div>
         <div className="flex flex-col">
           <label htmlFor="c-msg" className="field-label">Mesajınız *</label>
-          <textarea id="c-msg" name="message" className="field min-h-[9rem] flex-1 md:min-h-0" required minLength={10} maxLength={3000} />
+          <textarea id="c-msg" name="message" className="field min-h-[10rem] flex-1 md:min-h-0" required minLength={10} maxLength={3000} />
         </div>
       </div>
       <Guard ch={ch} chErr={err} answer={answer} setAnswer={setAnswer} consent={consent} setConsent={setConsent} />

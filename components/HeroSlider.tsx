@@ -48,7 +48,7 @@ export default function HeroSlider({ slides }: { slides: HeroSlide[] }) {
               </div>
               <Link href={`/urun/${s.slug}`} className="hs-frame" tabIndex={d === 0 ? 0 : -1} aria-label={`${s.name} eserini incele`}>
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={s.src} srcSet={s.srcSet} sizes="(min-width:1024px) 32vw, 70vw" width={1600} height={2000} alt={s.alt} fetchPriority={k === 0 ? "high" : "low"} loading={k === 0 ? "eager" : "lazy"} decoding="async" />
+                <img src={s.src} srcSet={s.srcSet} sizes="(min-width:1024px) 40vw, 70vw" width={1600} height={2000} alt={s.alt} fetchPriority={k === 0 ? "high" : "low"} loading={k === 0 ? "eager" : "lazy"} decoding="async" />
               </Link>
             </div>
           </div>

@@ -1,27 +1,30 @@
 "use client";
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { HeroHat } from "./Hat";
 
 export type ShowItem = { slug: string; name: string; src: string; srcSet?: string; alt: string };
 
 export default function AboutShow({ items }: { items: ShowItem[] }) {
   const [i, setI] = useState(0);
-  const [paused, setPaused] = useState(false);
   useEffect(() => {
-    if (items.length < 2 || paused) return;
+    if (items.length < 2) return;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     const t = setInterval(() => setI((v) => (v + 1) % items.length), 4000);
     return () => clearInterval(t);
-  }, [items.length, paused]);
+  }, [items.length]);
 
   return (
-    <div className="relative mx-auto w-full max-w-[520px] self-start" onMouseEnter={() => setPaused(true)} onMouseLeave={() => setPaused(false)}>
-      <div className="pointer-events-none absolute -inset-10 text-ink" aria-hidden="true">
-        <HeroHat className="h-full w-full overflow-visible" />
-      </div>
+    <div className="relative mx-auto w-full max-w-[520px] self-start">
+      <svg className="pointer-events-none absolute -inset-8 h-[calc(100%+4rem)] w-[calc(100%+4rem)] overflow-hidden" viewBox="0 0 560 700" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+        <g fill="none" strokeLinecap="round">
+          <path className="flow-line text-navy" pathLength={1} strokeWidth="5" style={{ ["--d" as string]: "9s" }} d="M14 60 C 6 300, 20 500, 110 630 C 190 730, 380 712, 540 676" />
+          <path className="flow-line text-navy" pathLength={1} strokeWidth="1.4" style={{ ["--d" as string]: "11s", ["--delay" as string]: "-3s" }} d="M34 86 C 26 320, 44 520, 132 650 C 214 748, 400 730, 548 700" />
+          <path className="flow-line text-gold" pathLength={1} strokeWidth="2" style={{ ["--d" as string]: "8s", ["--delay" as string]: "-2s" }} d="M360 18 C 450 -8 548 36 540 108 C 534 160 470 158 476 116 C 480 88 514 94 512 116" />
+          <path className="flow-line text-gold" pathLength={1} strokeWidth="1.6" style={{ ["--d" as string]: "10s", ["--delay" as string]: "-5s" }} d="M548 330 C 520 420, 556 520, 520 610" />
+        </g>
+      </svg>
       {items.length > 0 && (
-        <div className="relative">
+        <div className="relative z-10">
           <div className="frame">
             <div className="relative aspect-[4/5] overflow-hidden bg-paper-2">
               {items.map((it, k) => (

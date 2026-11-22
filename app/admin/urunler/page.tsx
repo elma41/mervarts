@@ -57,7 +57,7 @@ export default function ProductsAdmin() {
           <h1 className="font-display text-3xl">Ürünler</h1>
           <p className="text-earth">{items ? `${items.length} ürün` : "Yükleniyor…"}</p>
         </div>
-        <Link href="/admin/urunler/yeni" className="btn btn-primary">＋ Yeni ürün</Link>
+        <Link href="/admin/urunler/duzenle?id=yeni" className="btn btn-primary">＋ Yeni ürün</Link>
       </div>
 
       <div className="mt-6 flex flex-wrap gap-3">
@@ -75,7 +75,7 @@ export default function ProductsAdmin() {
         <div className="mt-8 rounded-2xl border border-dashed border-line bg-paper p-10 text-center">
           <p className="font-display text-2xl">Henüz ürün yok</p>
           <p className="mt-1 text-earth">İlk ürünü ekleyin; fotoğrafları sürükleyip bırakmanız yeterli.</p>
-          <Link href="/admin/urunler/yeni" className="btn btn-primary mt-5">＋ İlk ürünü ekle</Link>
+          <Link href="/admin/urunler/duzenle?id=yeni" className="btn btn-primary mt-5">＋ İlk ürünü ekle</Link>
         </div>
       )}
 
@@ -84,12 +84,12 @@ export default function ProductsAdmin() {
           const cover = sortImages(p.product_images)[0];
           return (
             <li key={p.id} className="flex flex-wrap items-center gap-4 rounded-2xl border border-line bg-paper p-3 sm:flex-nowrap">
-              <Link href={`/admin/urunler/${p.id}`} className="block h-20 w-16 shrink-0 overflow-hidden rounded-xl bg-paper-2">
+              <Link href={`/admin/urunler/duzenle?id=${p.id}`} className="block h-20 w-16 shrink-0 overflow-hidden rounded-xl bg-paper-2">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 {cover && <img src={productImage(cover.path).sm} alt="" className="h-full w-full object-cover" />}
               </Link>
               <div className="min-w-0 flex-1">
-                <Link href={`/admin/urunler/${p.id}`} className="font-semibold hover:text-clay">{p.name}</Link>
+                <Link href={`/admin/urunler/duzenle?id=${p.id}`} className="font-semibold hover:text-clay">{p.name}</Link>
                 <p className="text-sm text-earth">
                   {p.code && <>{p.code} · </>}
                   {cats.find((c) => c.id === p.category_id)?.name || "Kategorisiz"} ·{" "}
@@ -115,7 +115,7 @@ export default function ProductsAdmin() {
                 className={`rounded-full px-3 py-1.5 text-sm font-semibold ${p.status === "published" ? "bg-sage text-white" : "bg-paper-3"}`}>
                 {p.status === "published" ? "● Yayında" : "○ Taslak"}
               </button>
-              <Link href={`/admin/urunler/${p.id}`} className="rounded-full border border-line px-3 py-1.5 text-sm">Düzenle</Link>
+              <Link href={`/admin/urunler/duzenle?id=${p.id}`} className="rounded-full border border-line px-3 py-1.5 text-sm">Düzenle</Link>
               <button onClick={() => remove(p)} className="rounded-full px-3 py-1.5 text-sm text-clay-dark hover:bg-clay/10">Sil</button>
             </li>
           );

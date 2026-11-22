@@ -16,7 +16,16 @@ const csp = [
   "upgrade-insecure-requests",
 ].join("; ");
 
-const nextConfig: NextConfig = {
+// GitHub Pages sürümü: statik dışa aktarım, /mervarts alt yolunda yayınlanır.
+const pages = process.env.GITHUB_PAGES === "1";
+
+const nextConfig: NextConfig = pages ? {
+  output: "export",
+  basePath: "/mervarts",
+  trailingSlash: true,
+  poweredByHeader: false,
+  images: { unoptimized: true },
+} : {
   poweredByHeader: false,
   images: { unoptimized: true },
   async headers() {

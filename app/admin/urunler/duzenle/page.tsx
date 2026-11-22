@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
-import { useParams, useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { Suspense, useEffect, useState } from "react";
 import { browserClient } from "@/lib/supabase";
 import { useAdmin } from "@/components/admin/AdminShell";
 import ImageManager, { type ImgItem } from "@/components/admin/ImageManager";
@@ -16,8 +16,8 @@ type Form = {
 };
 const EMPTY: Form = { name: "", slug: "", code: "", description: "", category_id: "", pricing_mode: "fixed", price: "", shopier_url: "", track_stock: true, stock: 1, badges: ["El Yapımı"], status: "draft", is_featured: false, sort_order: 0 };
 
-export default function EditProduct() {
-  const { id } = useParams<{ id: string }>();
+function EditProduct() {
+  const id = useSearchParams().get("id") || "yeni";
   const isNew = id === "yeni";
   const router = useRouter();
   const sb = browserClient();
@@ -134,7 +134,7 @@ export default function EditProduct() {
 
     setSaving(null);
     toast(row.status === "published" ? "Kaydedildi ve yayında" : "Taslak olarak kaydedildi");
-    if (isNew) router.replace(`/admin/urunler/${pid}`);
+    if (isNew) router.replace(`/admin/urunler/duzenle?id=${pid}`);
     else setImgs(final);
   }
 
@@ -283,4 +283,8 @@ export default function EditProduct() {
       </div>
     </form>
   );
+}
+
+export default function Page() {
+  return <Suspense fallback={null}><EditProduct /></Suspense>;
 }

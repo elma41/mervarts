@@ -4,6 +4,8 @@ import { getCategories, getProducts } from "@/lib/data";
 
 export const revalidate = 3600;
 
+export const dynamic = "force-static";
+
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const [products, categories] = await Promise.all([getProducts(), getCategories()]);
   const now = new Date();

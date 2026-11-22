@@ -45,7 +45,7 @@ export default function Dashboard() {
           <h1 className="font-display text-3xl">Hoş geldiniz</h1>
           <p className="text-earth">Atölyenin kısa özeti.</p>
         </div>
-        <Link href="/admin/urunler/yeni" className="btn btn-primary">＋ Yeni ürün ekle</Link>
+        <Link href="/admin/urunler/duzenle?id=yeni" className="btn btn-primary">＋ Yeni ürün ekle</Link>
       </div>
 
       <ul className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -66,7 +66,7 @@ export default function Dashboard() {
             <ul className="mt-3 divide-y divide-line">
               {low.map((p) => (
                 <li key={p.id} className="flex items-center justify-between py-2.5">
-                  <Link href={`/admin/urunler/${p.id}`} className="font-medium hover:text-clay">{p.name}</Link>
+                  <Link href={`/admin/urunler/duzenle?id=${p.id}`} className="font-medium hover:text-clay">{p.name}</Link>
                   <span className={`rounded-full px-2.5 py-0.5 text-xs font-bold ${p.is_sold_out ? "bg-ink text-paper" : "bg-clay/10 text-clay-dark"}`}>
                     {p.is_sold_out ? "Tükendi" : `${p.stock} adet`}
                   </span>
@@ -83,7 +83,7 @@ export default function Dashboard() {
               <thead><tr className="text-left text-earth"><th className="py-1 font-medium">Ürün</th><th className="font-medium">Görüntülenme</th><th className="font-medium">Shopier</th><th className="font-medium">WhatsApp</th></tr></thead>
               <tbody className="divide-y divide-line">
                 {stats.map((s) => (
-                  <tr key={s.product_id}><td className="py-2"><Link href={`/admin/urunler/${s.product_id}`} className="hover:text-clay">{s.name}</Link></td><td>{s.views}</td><td>{s.shopier_clicks}</td><td>{s.whatsapp_clicks}</td></tr>
+                  <tr key={s.product_id}><td className="py-2"><Link href={`/admin/urunler/duzenle?id=${s.product_id}`} className="hover:text-clay">{s.name}</Link></td><td>{s.views}</td><td>{s.shopier_clicks}</td><td>{s.whatsapp_clicks}</td></tr>
                 ))}
               </tbody>
             </table>

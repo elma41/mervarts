@@ -2,6 +2,7 @@ import Link from "next/link";
 import ProductCard from "@/components/ProductCard";
 import ReviewBlock from "@/components/ReviewBlock";
 import { HatDivider } from "@/components/Hat";
+import ScrollFilm from "@/components/ScrollFilm";
 import { getCategories, getProducts, getSettings } from "@/lib/data";
 import { price, productImage, sortImages } from "@/lib/format";
 import type { Product } from "@/lib/types";
@@ -18,6 +19,8 @@ function img(p: Product, n = 0) {
 export default async function Home() {
   const [s, categories, latest] = await Promise.all([getSettings(), getCategories(), getProducts({ limit: 24 })]);
   const withPhoto = latest.filter((p) => img(p));
+  const filmP = withPhoto.find((p) => p.is_featured) || withPhoto[0];
+  const filmImg = filmP ? img(filmP) : null;
   const slidePool = [...withPhoto.filter((p) => p.is_featured), ...withPhoto.filter((p) => !p.is_featured)].slice(0, 4);
   const catCover = (slug: string) => {
     const p = latest.find((x) => x.categories?.slug === slug && img(x));
@@ -32,27 +35,16 @@ export default async function Home() {
 
   return (
     <>
-      <section className="hero-shell on-photo" aria-label="Giriş">
-        {slidePool.map((p, i) => {
-          const im = img(p)!;
-          return (
-            <div key={p.id} className="slide" style={{ ["--i" as string]: i }} aria-hidden={i > 0}>
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img className="bg grade" src={im.src.lg} srcSet={im.src.srcSet} sizes="100vw" width={1600} height={2000} alt={i === 0 ? im.alt : ""}
-                fetchPriority={i === 0 ? "high" : "low"} loading={i === 0 ? "eager" : "lazy"} decoding="async" />
-            </div>
-          );
-        })}
-        <div className="hero-shade" aria-hidden="true" />
-        <div className="relative z-10 mx-auto flex h-full max-w-[1440px] flex-col justify-end px-5 pb-14 sm:px-10 sm:pb-20 lg:px-14">
-          <p className="text-earth">Merve Türkdönmez · tezhip ve hat sanatı</p>
-          <h1 className="mt-3 max-w-[14ch] font-display text-[clamp(3rem,8vw,7.5rem)] leading-[.98]" data-write>El emeği sanat eserleri.</h1>
-          <div className="mt-8 flex flex-wrap gap-3">
-            <Link href="/urunler" className="btn btn-primary">Eserleri keşfet</Link>
-            <Link href="/ozel-siparis" className="btn btn-ghost">Kişiye özel teklif al</Link>
-          </div>
-        </div>
-      </section>
+      {filmP && filmImg ? (
+        <ScrollFilm name={filmP.name} slug={filmP.slug} category={filmP.categories?.name || ""} src={filmImg.src.lg} srcSet={filmImg.src.srcSet} alt={filmImg.alt}
+          price={filmP.pricing_mode === "fixed" && filmP.price != null ? price(filmP.price) : "Fiyat için teklif alın"}
+          buy={filmP.is_sold_out ? null : filmP.shopier_url || s.shopier_url} />
+      ) : (
+        <section className="mx-auto max-w-[1440px] px-5 pb-16 pt-10 sm:px-10 lg:px-14">
+          <h1 className="font-display text-6xl sm:text-8xl">El emeği sanat eserleri.</h1>
+          <Link href="/urunler" className="btn btn-primary mt-8">Eserleri keşfet</Link>
+        </section>
+      )}
 
       <section aria-label="Neden merv.arts" className="border-y border-line bg-mat">
         <ul className="mx-auto grid max-w-[1440px] gap-px px-5 sm:grid-cols-2 sm:px-10 lg:grid-cols-4 lg:px-14">

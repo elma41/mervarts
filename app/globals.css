@@ -358,3 +358,42 @@ body:has(.slider[data-tone="dark"]) header nav[aria-label="Mobil menü"] { --col
 .group:hover .card-media .img-alt { transform: scale(1.1); }
 .card-buy { display: flex; align-items: center; justify-content: center; margin-top: .75rem; min-height: 44px; border-radius: 999px; background: #1a1a1a; color: #fff; font-weight: 700; font-size: .9rem; transition: background .2s, transform .2s; }
 .card-buy:hover { background: #7a1f33; transform: translateY(-1px); }
+
+/* ===== Sinematik kaydırma sahnesi ===== */
+.film { position: relative; height: 430svh; background: var(--bg1, #3a1220); --bg1: #3a1220; --ry: -38deg; --rx: 10deg; --rz: -5deg; --sc: .74; --ty: 40px; --glow: .5; --gx: 50%; --gy: 40%; --cta: 0; }
+.film-stick { position: sticky; top: 0; height: 100svh; overflow: hidden; perspective: 1400px; }
+.film-glow { position: absolute; inset: -20%; pointer-events: none; opacity: var(--glow);
+  background: radial-gradient(circle at var(--gx) var(--gy), rgba(243, 205, 120, .55), rgba(243, 205, 120, 0) 42%), radial-gradient(circle at 50% 55%, rgba(255, 150, 90, .28), rgba(255, 150, 90, 0) 55%); }
+.film-brand { position: absolute; top: 1.4rem; left: 50%; transform: translateX(-50%); font-family: var(--font-display); font-size: 1.1rem; letter-spacing: .14em; opacity: .85; z-index: 5; }
+.film-product { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; transform-style: preserve-3d; }
+.film-card { position: relative; width: min(30vw, 380px); aspect-ratio: 4 / 5; background: #fff; padding: clamp(8px, 1vw, 14px); transform-style: preserve-3d; will-change: transform;
+  transform: translate3d(0, var(--ty), 0) rotateX(var(--rx)) rotateY(var(--ry)) rotateZ(var(--rz)) scale(var(--sc));
+  box-shadow: 0 60px 90px -30px rgba(0, 0, 0, .65), 0 0 0 1px rgba(255, 255, 255, .15), 0 0 80px -10px rgba(243, 205, 120, calc(var(--glow) * .5)); }
+.film-card img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.film-shine { position: absolute; inset: 0; pointer-events: none; mix-blend-mode: soft-light;
+  background: linear-gradient(115deg, rgba(255, 255, 255, 0) calc(var(--prog, 0) * 100% - 20%), rgba(255, 255, 255, .55) calc(var(--prog, 0) * 100%), rgba(255, 255, 255, 0) calc(var(--prog, 0) * 100% + 20%)); }
+.film-text { position: absolute; z-index: 4; max-width: 7.5ch; font-family: var(--font-display); font-weight: 500; line-height: .95; font-size: clamp(2.4rem, 5.2vw, 5.2rem); color: #fff6df; will-change: transform, opacity; pointer-events: none; text-shadow: 0 4px 30px rgba(0, 0, 0, .35); }
+.film-text-left { left: clamp(1.25rem, 5vw, 5rem); top: 50%; margin-top: -2.4em; text-align: left; }
+.film-text-right { right: clamp(1.25rem, 5vw, 5rem); top: 50%; margin-top: -2.4em; text-align: right; }
+.film-cta { position: absolute; left: 0; right: 0; bottom: clamp(1.5rem, 6vh, 3.5rem); z-index: 6; text-align: center; padding: 0 1.25rem; pointer-events: none; }
+.film[data-done="true"] .film-cta { pointer-events: auto; }
+.film-cat { opacity: .8; }
+.film-name { font-family: var(--font-display); font-style: italic; font-size: clamp(1.8rem, 3.4vw, 2.8rem); line-height: 1.05; margin-top: .2rem; }
+.film-price { font-family: var(--font-display); font-size: 1.6rem; margin-top: .25rem; }
+.film-buy { box-shadow: 0 0 0 0 rgba(243, 205, 120, .6); }
+.film[data-done="true"] .film-buy { animation: filmpulse 2.4s ease-out infinite; }
+@keyframes filmpulse { 0% { box-shadow: 0 0 0 0 rgba(243, 205, 120, .55); } 100% { box-shadow: 0 0 0 22px rgba(243, 205, 120, 0); } }
+.film-hint { position: absolute; left: 50%; bottom: 1.2rem; transform: translateX(-50%); font-size: .85rem; letter-spacing: .12em; opacity: calc(1 - var(--prog, 0) * 6); z-index: 5; }
+.film-bar { position: absolute; left: 0; right: 0; top: 0; height: 3px; background: rgba(255, 255, 255, .12); z-index: 7; }
+.film-bar i { display: block; height: 100%; width: calc(var(--prog, 0) * 100%); background: #e6c677; }
+@media (max-width: 1023px) {
+  .film-card { width: min(62vw, 320px); }
+  .film-text { top: auto; bottom: 22%; margin-top: 0; font-size: clamp(2.2rem, 11vw, 3.6rem); max-width: 12ch; left: 1.25rem; right: 1.25rem; text-align: center; }
+  .film-text-left, .film-text-right { left: 1.25rem; right: 1.25rem; top: auto; margin-top: 0; text-align: center; }
+  .film-product { align-items: flex-start; padding-top: 14svh; }
+  .film-cta { bottom: 1.2rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .film { height: auto; } .film-stick { position: relative; height: auto; min-height: 100svh; padding: 4rem 0 8rem; }
+  .film-card { transform: none; } .film-text { display: none; } .film-cta { opacity: 1 !important; transform: none !important; position: relative; margin-top: 2rem; pointer-events: auto; }
+}

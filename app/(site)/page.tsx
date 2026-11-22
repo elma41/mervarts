@@ -2,8 +2,7 @@ import Link from "next/link";
 import ProductCard from "@/components/ProductCard";
 import ReviewBlock from "@/components/ReviewBlock";
 import { HatDivider } from "@/components/Hat";
-import ScrollFilm from "@/components/ScrollFilm";
-import ScrollChapters, { type Chapter } from "@/components/ScrollChapters";
+import ScrollFilm, { type FilmItem } from "@/components/ScrollFilm";
 import { getCategories, getProducts, getSettings } from "@/lib/data";
 import { price, productImage, sortImages } from "@/lib/format";
 import type { Product } from "@/lib/types";
@@ -20,20 +19,11 @@ function img(p: Product, n = 0) {
 export default async function Home() {
   const [s, categories, latest] = await Promise.all([getSettings(), getCategories(), getProducts({ limit: 24 })]);
   const withPhoto = latest.filter((p) => img(p));
-  const TONES: Record<string, string> = { "esma-ul-husna": "#efe3d0", "kisiye-ozel-harf": "#e3e8f3", "gul-ve-cicek": "#f6dedb", "rokoko-tezhip": "#e0eadf" };
-  const chapters: Chapter[] = withPhoto.slice(0, 6).map((p, i) => {
-    const im = img(p, i === 0 ? 1 : 0) || img(p)!;
-    const plain = (p.description || "").replace(/\s+/g, " ").trim();
-    return {
-      slug: p.slug, name: p.name, category: p.categories?.name || "", code: p.code, badges: p.badges, blurb: plain.length > 220 ? plain.slice(0, 217).trimEnd() + "..." : plain,
-      stock: p.is_sold_out ? "Satıldı" : p.track_stock && p.stock > 0 && p.stock <= 3 ? `Son ${p.stock} adet` : null,
-      price: p.pricing_mode === "fixed" && p.price != null ? price(p.price) : "Fiyat için teklif alın",
-      buy: p.is_sold_out ? null : p.shopier_url || s.shopier_url, src: im.src.lg, srcSet: im.src.srcSet, alt: im.alt,
-      bg: TONES[p.categories?.slug || ""] || "#f1e8d6", tone: "#1c1b2b",
-    };
+  const filmItems: FilmItem[] = withPhoto.slice(0, 14).map((p) => {
+    const im = img(p)!;
+    return { slug: p.slug, name: p.name, category: p.categories?.name || "", src: im.src.sm, srcSet: im.src.srcSet, alt: im.alt,
+      price: p.pricing_mode === "fixed" && p.price != null ? price(p.price) : "Fiyat sorun" };
   });
-  const filmP = withPhoto.find((p) => p.is_featured) || withPhoto[0];
-  const filmImg = filmP ? img(filmP) : null;
   const slidePool = [...withPhoto.filter((p) => p.is_featured), ...withPhoto.filter((p) => !p.is_featured)].slice(0, 4);
   const catCover = (slug: string) => {
     const p = latest.find((x) => x.categories?.slug === slug && img(x));
@@ -48,18 +38,14 @@ export default async function Home() {
 
   return (
     <>
-      {filmP && filmImg ? (
-        <ScrollFilm name={filmP.name} slug={filmP.slug} category={filmP.categories?.name || ""} src={filmImg.src.lg} srcSet={filmImg.src.srcSet} alt={filmImg.alt}
-          price={filmP.pricing_mode === "fixed" && filmP.price != null ? price(filmP.price) : "Fiyat için teklif alın"}
-          buy={filmP.is_sold_out ? null : filmP.shopier_url || s.shopier_url} />
+      {filmItems.length > 0 ? (
+        <ScrollFilm items={filmItems} shopier={s.shopier_url} />
       ) : (
         <section className="mx-auto max-w-[1440px] px-5 pb-16 pt-10 sm:px-10 lg:px-14">
           <h1 className="font-display text-6xl sm:text-8xl">El emeği sanat eserleri.</h1>
           <Link href="/urunler" className="btn btn-primary mt-8">Eserleri keşfet</Link>
         </section>
       )}
-
-      {chapters.length > 0 && <ScrollChapters chapters={chapters} />}
 
       <section aria-label="Neden merv.arts" className="border-y border-line bg-mat">
         <ul className="mx-auto grid max-w-[1440px] gap-px px-5 sm:grid-cols-2 sm:px-10 lg:grid-cols-4 lg:px-14">
@@ -98,7 +84,7 @@ export default async function Home() {
 
       <section aria-labelledby="koleksiyon" className="mx-auto mt-20 max-w-[1440px] px-5 sm:px-10 lg:px-14">
         <div className="flex items-end justify-between gap-6">
-          <h2 id="koleksiyon" data-reveal className="font-display text-4xl sm:text-5xl">Tüm koleksiyon</h2>
+          <h2 id="koleksiyon" data-reveal className="font-display text-4xl sm:text-5xl">Eserler</h2>
           <Link href="/urunler" className="link-line">Filtrele ve sırala</Link>
         </div>
         <div className="mt-8 grid grid-cols-2 gap-x-4 gap-y-10 sm:gap-x-6 lg:grid-cols-4">

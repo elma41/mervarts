@@ -2,57 +2,50 @@
 import Link from "next/link";
 import { useEffect, useRef } from "react";
 
-type Props = { name: string; slug: string; price: string; buy: string | null; src: string; srcSet?: string; alt: string; category: string };
-
-const LAYERS = [
-  { a: 0.04, b: 0.3, text: "El yapımı özel tasarım", side: "left" },
-  { a: 0.26, b: 0.52, text: "Altın varakla, tek tek işlenir", side: "right" },
-  { a: 0.48, b: 0.74, text: "Sınırlı üretim", side: "left" },
-  { a: 0.68, b: 0.92, text: "Koleksiyon parçası", side: "right" },
-] as const;
+export type FilmItem = { slug: string; name: string; category: string; price: string; src: string; srcSet?: string; alt: string };
 
 const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
 const clamp = (x: number) => Math.min(1, Math.max(0, x));
 const ease = (t: number) => t * t * (3 - 2 * t);
 const mix = (c1: number[], c2: number[], t: number) => c1.map((v, i) => Math.round(lerp(v, c2[i], t))).join(",");
 
-/** Kaydırmaya bağlı sinematik ürün sahnesi. Kütüphane yok: scroll + rAF + CSS değişkenleri. */
-export default function ScrollFilm({ name, slug, price, buy, src, srcSet, alt, category }: Props) {
+/** Kaydırmaya bağlı "Tüm koleksiyon" sahnesi: iki sıra eser, biri sola biri sağa akar; ortadaki kart öne çıkar. */
+export default function ScrollFilm({ items, shopier }: { items: FilmItem[]; shopier: string }) {
   const root = useRef<HTMLElement>(null);
+  const rowA = useRef<HTMLDivElement>(null);
+  const rowB = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const el = root.current;
-    if (!el) return;
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) { el.style.setProperty("--p", "1"); el.dataset.done = "true"; return; }
-    let raf = 0, tx = 0.5, ty = 0.4, cx = 0.5, cy = 0.4;
+    const el = root.current, a = rowA.current, b = rowB.current;
+    if (!el || !a || !b) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) { el.dataset.done = "true"; return; }
+    const cards = Array.from(el.querySelectorAll<HTMLElement>(".film-item"));
+    let raf = 0, tx = 0.5, ty = 0.4, cx = 0.5, cy = 0.4, pending = false;
     const A = [58, 18, 32], B = [122, 42, 28], C = [74, 26, 34];
 
     const apply = () => {
+      pending = false;
+      const vw = window.innerWidth;
       const r = el.getBoundingClientRect();
-      const total = r.height - window.innerHeight;
-      const p = clamp(-r.top / Math.max(1, total));
-      const settle = ease(clamp((p - 0.78) / 0.18));
-      const rotY = lerp(-38, 38, ease(p)) * (1 - settle);
-      const rotX = lerp(10, -6, p) * (1 - settle);
-      const rotZ = lerp(-5, 4, p) * (1 - settle);
-      const scale = lerp(0.74, 1.14, ease(clamp(p / 0.7))) - 0.12 * settle;
-      el.style.setProperty("--ry", `${rotY.toFixed(2)}deg`);
-      el.style.setProperty("--rx", `${rotX.toFixed(2)}deg`);
-      el.style.setProperty("--rz", `${rotZ.toFixed(2)}deg`);
-      el.style.setProperty("--sc", scale.toFixed(3));
-      el.style.setProperty("--ty", `${lerp(40, -10, p).toFixed(1)}px`);
+      const p = clamp(-r.top / Math.max(1, r.height - window.innerHeight));
+      const e = ease(p);
+      const spanA = Math.max(0, a.scrollWidth - vw + 80), spanB = Math.max(0, b.scrollWidth - vw + 80);
+      a.style.transform = `translate3d(${(-spanA * e + 40).toFixed(1)}px,0,0)`;
+      b.style.transform = `translate3d(${(-spanB * (1 - e) + 40).toFixed(1)}px,0,0)`;
+      for (const c of cards) {
+        const cr = c.getBoundingClientRect();
+        const d = clamp(Math.abs((cr.left + cr.width / 2 - vw / 2) / (vw * 0.6)));
+        const sign = cr.left + cr.width / 2 < vw / 2 ? 1 : -1;
+        c.style.setProperty("--cs", (1.1 - d * 0.3).toFixed(3));
+        c.style.setProperty("--cr", `${(sign * d * 32).toFixed(1)}deg`);
+        c.style.setProperty("--co", (1 - d * 0.45).toFixed(2));
+      }
       el.style.setProperty("--bg1", `rgb(${p < 0.5 ? mix(A, B, p * 2) : mix(B, C, (p - 0.5) * 2)})`);
-      el.style.setProperty("--glow", (0.35 + 0.5 * Math.sin(Math.PI * clamp(p * 1.1))).toFixed(2));
+      el.style.setProperty("--glow", (0.35 + 0.5 * Math.sin(Math.PI * p)).toFixed(2));
       el.style.setProperty("--prog", p.toFixed(3));
-      el.style.setProperty("--cta", clamp((p - 0.86) / 0.1).toFixed(3));
+      el.style.setProperty("--tt", `${lerp(80, -80, p).toFixed(1)}px`);
+      el.style.setProperty("--cta", clamp((p - 0.82) / 0.12).toFixed(3));
       el.dataset.done = p > 0.9 ? "true" : "false";
-      LAYERS.forEach((l, i) => {
-        const t = clamp((p - l.a) / (l.b - l.a));
-        const o = Math.min(1, Math.min(t / 0.25, (1 - t) / 0.25)); // gir, bekle, çık
-        const dir = l.side === "left" ? -1 : 1;
-        el.style.setProperty(`--o${i}`, Math.max(0, o).toFixed(3));
-        el.style.setProperty(`--x${i}`, `${(dir * lerp(60, -60, t)).toFixed(1)}px`);
-      });
     };
     const loop = () => {
       cx += (tx - cx) * 0.08; cy += (ty - cy) * 0.08;
@@ -60,44 +53,41 @@ export default function ScrollFilm({ name, slug, price, buy, src, srcSet, alt, c
       el.style.setProperty("--gy", `${(cy * 100).toFixed(1)}%`);
       raf = requestAnimationFrame(loop);
     };
-    const onScroll = () => apply();
+    const on = () => { if (!pending) { pending = true; requestAnimationFrame(apply); } };
     const onMove = (e: PointerEvent) => { tx = e.clientX / window.innerWidth; ty = e.clientY / window.innerHeight; };
     apply(); loop();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", onScroll);
+    window.addEventListener("scroll", on, { passive: true });
+    window.addEventListener("resize", on);
     window.addEventListener("pointermove", onMove, { passive: true });
-    return () => { cancelAnimationFrame(raf); window.removeEventListener("scroll", onScroll); window.removeEventListener("resize", onScroll); window.removeEventListener("pointermove", onMove); };
+    return () => { cancelAnimationFrame(raf); window.removeEventListener("scroll", on); window.removeEventListener("resize", on); window.removeEventListener("pointermove", onMove); };
   }, []);
 
+  const rows: FilmItem[][] = [items.filter((_, i) => i % 2 === 0), items.filter((_, i) => i % 2 === 1)];
+  const card = (p: FilmItem, i: number) => (
+    <Link key={p.slug} href={`/urun/${p.slug}`} className="film-item" aria-label={`${p.name}, ${p.price}`}>
+      <span className="film-frame">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src={p.src} srcSet={p.srcSet} sizes="(min-width:1024px) 24vw, 46vw" width={1600} height={2000} alt={p.alt} loading={i < 2 ? "eager" : "lazy"} decoding="async" />
+      </span>
+      <span className="film-cap"><b>{p.name}</b><i>{p.price}</i></span>
+    </Link>
+  );
+
   return (
-    <section ref={root} className="film on-photo" aria-label={`${name}, sinematik ürün sahnesi`} data-done="false">
+    <section ref={root} className="film on-photo" aria-label="Tüm koleksiyon" data-done="false">
       <div className="film-stick">
         <div className="film-glow" aria-hidden="true" />
-        <p className="film-brand">merv.arts</p>
-
-        <div className="film-product" aria-hidden="false">
-          <div className="film-card">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={src} srcSet={srcSet} sizes="(min-width:1024px) 34vw, 70vw" width={1600} height={2000} alt={alt} fetchPriority="high" decoding="async" />
-            <span className="film-shine" aria-hidden="true" />
-          </div>
+        <h1 className="film-title" aria-label="Tüm koleksiyon, merv.arts el emeği tezhip ve hat sanatı">
+          <span aria-hidden="true">Tüm koleksiyon</span>
+        </h1>
+        <div className="film-rows">
+          <div ref={rowA} className="film-row">{rows[0].map((p, i) => card(p, i))}</div>
+          <div ref={rowB} className="film-row film-row-b">{rows[1].map((p, i) => card(p, i + 2))}</div>
         </div>
-
-        <h1 className="sr-only">merv.arts: el emeği tezhip ve hat sanatı</h1>
-        {LAYERS.map((l, i) => (
-          <p key={i} className={`film-text film-text-${l.side}`} style={{ opacity: `var(--o${i}, 0)`, transform: `translate3d(var(--x${i}, 0px), 0, 0)` }}>{l.text}</p>
-        ))}
-
         <div className="film-cta" style={{ opacity: "var(--cta, 0)", transform: "translateY(calc((1 - var(--cta, 0)) * 24px))" }}>
-          <p className="film-cat">{category}</p>
-          <p className="film-name">{name}</p>
-          <p className="film-price">{price}</p>
-          <div className="mt-5 flex flex-wrap justify-center gap-3">
-            <Link href={`/urun/${slug}`} className="btn btn-ghost">Koleksiyonu incele</Link>
-            {buy && <a href={buy} target="_blank" rel="noopener" className="btn btn-primary film-buy">Shopier ile satın al</a>}
-          </div>
+          <Link href="/urunler" className="btn btn-primary film-buy">Koleksiyonu incele</Link>
+          <a href={shopier} target="_blank" rel="noopener" className="btn btn-ghost">Shopier mağazası</a>
         </div>
-
         <p className="film-hint" aria-hidden="true">Aşağı kaydırın</p>
         <div className="film-bar" aria-hidden="true"><i /></div>
       </div>

@@ -78,9 +78,9 @@ export default function Header({ s }: { s: SiteSettings }) {
           </Link>
 
           <nav aria-label="Ana menü" className="hidden md:block">
-            <ul className="flex items-center gap-8 text-base font-semibold text-ink">
+            <ul className="flex items-center gap-3 text-base font-semibold text-ink">
               {NAV.map((n) => (
-                <li key={n.href}><Link href={n.href} className="nav-link py-2">{n.label}</Link></li>
+                <li key={n.href}><Link href={n.href} className="nav-btn">{n.label}</Link></li>
               ))}
               <li><ShopierButton href={s.shopier_url} label="Shopier mağazası" /></li>
             </ul>

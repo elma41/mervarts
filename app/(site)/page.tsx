@@ -2,7 +2,7 @@ import Link from "next/link";
 import ProductCard from "@/components/ProductCard";
 import ReviewBlock from "@/components/ReviewBlock";
 import { HatDivider } from "@/components/Hat";
-import ScrollFilm, { type FilmItem } from "@/components/ScrollFilm";
+import HeroSlider, { type HeroSlide } from "@/components/HeroSlider";
 import { getCategories, getProducts, getSettings } from "@/lib/data";
 import { price, productImage, sortImages } from "@/lib/format";
 import type { Product } from "@/lib/types";
@@ -19,10 +19,10 @@ function img(p: Product, n = 0) {
 export default async function Home() {
   const [s, categories, latest] = await Promise.all([getSettings(), getCategories(), getProducts({ limit: 24 })]);
   const withPhoto = latest.filter((p) => img(p));
-  const filmItems: FilmItem[] = withPhoto.slice(0, 14).map((p) => {
+  const heroSlides: HeroSlide[] = [...withPhoto.filter((p) => p.is_featured), ...withPhoto.filter((p) => !p.is_featured)].slice(0, 6).map((p) => {
     const im = img(p)!;
-    return { slug: p.slug, name: p.name, category: p.categories?.name || "", src: im.src.sm, srcSet: im.src.srcSet, alt: im.alt,
-      price: p.pricing_mode === "fixed" && p.price != null ? price(p.price) : "Fiyat sorun" };
+    return { slug: p.slug, name: p.name, category: p.categories?.name || "", src: im.src.lg, srcSet: im.src.srcSet, alt: im.alt,
+      price: p.pricing_mode === "fixed" && p.price != null ? price(p.price) : "Fiyat için teklif alın", buy: p.is_sold_out ? null : p.shopier_url || s.shopier_url };
   });
   const slidePool = [...withPhoto.filter((p) => p.is_featured), ...withPhoto.filter((p) => !p.is_featured)].slice(0, 4);
   const catCover = (slug: string) => {
@@ -38,8 +38,8 @@ export default async function Home() {
 
   return (
     <>
-      {filmItems.length > 0 ? (
-        <ScrollFilm items={filmItems} shopier={s.shopier_url} />
+      {heroSlides.length > 0 ? (
+        <HeroSlider slides={heroSlides} />
       ) : (
         <section className="mx-auto max-w-[1440px] px-5 pb-16 pt-10 sm:px-10 lg:px-14">
           <h1 className="font-display text-6xl sm:text-8xl">El emeği sanat eserleri.</h1>
@@ -47,16 +47,14 @@ export default async function Home() {
         </section>
       )}
 
-      <section aria-label="Neden merv.arts" className="border-y border-line bg-mat">
-        <ul className="mx-auto grid max-w-[1440px] gap-px px-5 sm:grid-cols-2 sm:px-10 lg:grid-cols-4 lg:px-14">
-          {trust.map(([t, d]) => (
-            <li key={t} className="py-6 sm:px-5 sm:first:pl-0">
-              <h2 className="font-semibold">{t}</h2>
-              <p className="mt-1 text-sm text-earth">{d}</p>
-            </li>
-          ))}
-        </ul>
-      </section>
+      <ul className="feat" aria-label="Neden merv.arts">
+        {trust.map(([t, d]) => (
+          <li key={t}>
+            <h2 className="font-semibold">{t}</h2>
+            <p className="mt-1 text-sm text-earth">{d}</p>
+          </li>
+        ))}
+      </ul>
 
       {categories.length > 0 && (
         <section aria-labelledby="turler" className="mx-auto mt-20 max-w-[1440px] px-5 sm:px-10 lg:px-14">

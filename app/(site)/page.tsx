@@ -3,6 +3,7 @@ import ProductCard from "@/components/ProductCard";
 import ReviewBlock from "@/components/ReviewBlock";
 import { HatDivider } from "@/components/Hat";
 import ScrollFilm from "@/components/ScrollFilm";
+import ScrollChapters, { type Chapter } from "@/components/ScrollChapters";
 import { getCategories, getProducts, getSettings } from "@/lib/data";
 import { price, productImage, sortImages } from "@/lib/format";
 import type { Product } from "@/lib/types";
@@ -19,6 +20,18 @@ function img(p: Product, n = 0) {
 export default async function Home() {
   const [s, categories, latest] = await Promise.all([getSettings(), getCategories(), getProducts({ limit: 24 })]);
   const withPhoto = latest.filter((p) => img(p));
+  const TONES: Record<string, string> = { "esma-ul-husna": "#efe3d0", "kisiye-ozel-harf": "#e3e8f3", "gul-ve-cicek": "#f6dedb", "rokoko-tezhip": "#e0eadf" };
+  const chapters: Chapter[] = withPhoto.slice(0, 6).map((p, i) => {
+    const im = img(p, i === 0 ? 1 : 0) || img(p)!;
+    const plain = (p.description || "").replace(/\s+/g, " ").trim();
+    return {
+      slug: p.slug, name: p.name, category: p.categories?.name || "", code: p.code, badges: p.badges, blurb: plain.length > 220 ? plain.slice(0, 217).trimEnd() + "..." : plain,
+      stock: p.is_sold_out ? "Satıldı" : p.track_stock && p.stock > 0 && p.stock <= 3 ? `Son ${p.stock} adet` : null,
+      price: p.pricing_mode === "fixed" && p.price != null ? price(p.price) : "Fiyat için teklif alın",
+      buy: p.is_sold_out ? null : p.shopier_url || s.shopier_url, src: im.src.lg, srcSet: im.src.srcSet, alt: im.alt,
+      bg: TONES[p.categories?.slug || ""] || "#f1e8d6", tone: "#1c1b2b",
+    };
+  });
   const filmP = withPhoto.find((p) => p.is_featured) || withPhoto[0];
   const filmImg = filmP ? img(filmP) : null;
   const slidePool = [...withPhoto.filter((p) => p.is_featured), ...withPhoto.filter((p) => !p.is_featured)].slice(0, 4);
@@ -45,6 +58,8 @@ export default async function Home() {
           <Link href="/urunler" className="btn btn-primary mt-8">Eserleri keşfet</Link>
         </section>
       )}
+
+      {chapters.length > 0 && <ScrollChapters chapters={chapters} />}
 
       <section aria-label="Neden merv.arts" className="border-y border-line bg-mat">
         <ul className="mx-auto grid max-w-[1440px] gap-px px-5 sm:grid-cols-2 sm:px-10 lg:grid-cols-4 lg:px-14">

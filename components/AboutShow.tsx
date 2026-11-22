@@ -37,13 +37,6 @@ export default function AboutShow({ items }: { items: ShowItem[] }) {
               ))}
             </div>
           </div>
-          <p className="mt-4 font-display text-2xl text-clay" aria-live="polite">{items[i].name}</p>
-          <div className="mt-2 flex gap-1.5" role="tablist" aria-label="Eserler">
-            {items.map((it, k) => (
-              <button key={it.slug} type="button" aria-label={it.name} aria-selected={k === i} role="tab" onClick={() => setI(k)}
-                className={`h-1.5 rounded-full transition-all ${k === i ? "w-8 bg-clay" : "w-3 bg-earth/30"}`} />
-            ))}
-          </div>
         </div>
       )}
     </div>

@@ -8,32 +8,36 @@ export const contentType = "image/png";
 
 export default async function OG() {
   const dir = join(process.cwd(), "assets/og");
-  const [f1, f2, m1, m2] = await Promise.all(
-    ["fraunces-latin-400-normal.woff", "fraunces-latin-ext-400-normal.woff", "manrope-latin-600-normal.woff", "manrope-latin-ext-600-normal.woff"].map((f) => readFile(join(dir, f))),
+  const [b1, b2, m1, m2] = await Promise.all(
+    ["bricolage-grotesque-latin-800-normal.woff", "bricolage-grotesque-latin-ext-800-normal.woff", "manrope-latin-600-normal.woff", "manrope-latin-ext-600-normal.woff"].map((f) => readFile(join(dir, f))),
+  );
+  const ink = "#1e1233";
+  const card = (bg: string, rot: number, top: number, left: number, w: number, h: number) => (
+    <div style={{ position: "absolute", top, left, width: w, height: h, background: bg, border: `5px solid ${ink}`, borderRadius: 28, boxShadow: `10px 10px 0 ${ink}`, transform: `rotate(${rot}deg)`, display: "flex" }} />
   );
   return new ImageResponse(
     (
-      <div style={{ width: "100%", height: "100%", display: "flex", background: "#f6f1ea", padding: 70, justifyContent: "space-between", alignItems: "center" }}>
-        <div style={{ display: "flex", flexDirection: "column", maxWidth: 640 }}>
-          <div style={{ fontFamily: "Manrope, ManropeExt", fontSize: 28, letterSpacing: 7, color: "#5c5048" }}>EL EMEĞİ ATÖLYE</div>
-          <div style={{ fontFamily: "Fraunces, FrauncesExt", fontSize: 128, color: "#221c18", marginTop: 18, display: "flex" }}>
-            merv<span style={{ color: "#9e4126" }}>.</span>arts
+      <div style={{ width: "100%", height: "100%", display: "flex", background: "#fff7ee", position: "relative", overflow: "hidden" }}>
+        <div style={{ position: "absolute", left: -80, top: -80, width: 380, height: 380, borderRadius: 999, background: "#ffd6e5", display: "flex" }} />
+        <div style={{ position: "absolute", right: -60, bottom: -120, width: 460, height: 460, borderRadius: 999, background: "#e7ddff", display: "flex" }} />
+        {card("#ffd23f", -8, 90, 760, 220, 290)}
+        {card("#ff4f8b", 7, 60, 960, 190, 250)}
+        {card("#55c8ff", -2, 330, 860, 220, 230)}
+        <div style={{ position: "absolute", left: 70, top: 90, display: "flex", flexDirection: "column" }}>
+          <div style={{ display: "flex", fontFamily: "Manrope, ManropeExt", fontSize: 26, color: ink, background: "#2bd4a8", border: `4px solid ${ink}`, borderRadius: 999, padding: "8px 22px", alignSelf: "flex-start" }}>EL YAPIMI · TEK ÜRÜN</div>
+          <div style={{ display: "flex", fontFamily: "Bricolage, BricolageExt", fontSize: 140, color: ink, marginTop: 24, letterSpacing: -6 }}>
+            merv<span style={{ width: 46, height: 46, borderRadius: 999, background: "#ff4f8b", margin: "58px 6px 0", display: "flex" }} />arts
           </div>
-          <div style={{ fontFamily: "Fraunces, FrauncesExt", fontSize: 44, color: "#5c5048", marginTop: 10 }}>Merve Türkdönmez</div>
-          <div style={{ fontFamily: "Manrope, ManropeExt", fontSize: 28, color: "#5c5048", marginTop: 26 }}>Tablo · Seramik · Takı · Hediyelik</div>
-        </div>
-        <div style={{ width: 360, height: 470, borderTopLeftRadius: 180, borderTopRightRadius: 180, background: "#d9b597", display: "flex", overflow: "hidden", position: "relative", border: "2px solid #221c18" }}>
-          <div style={{ position: "absolute", top: 110, right: 50, width: 150, height: 150, borderRadius: 999, background: "#9e4126" }} />
-          <div style={{ position: "absolute", bottom: 0, left: 0, width: "100%", height: 160, background: "#55624a" }} />
-          <div style={{ position: "absolute", bottom: 0, left: 0, width: "100%", height: 70, background: "#221c18" }} />
+          <div style={{ display: "flex", fontFamily: "Bricolage, BricolageExt", fontSize: 50, color: ink, marginTop: 4 }}>Merve Türkdönmez</div>
+          <div style={{ display: "flex", fontFamily: "Manrope, ManropeExt", fontSize: 30, color: "#5a4a6b", marginTop: 22 }}>Tablo · Seramik · Takı · Hediyelik</div>
         </div>
       </div>
     ),
     {
       ...size,
       fonts: [
-        { name: "Fraunces", data: f1, weight: 400, style: "normal" },
-        { name: "FrauncesExt", data: f2, weight: 400, style: "normal" },
+        { name: "Bricolage", data: b1, weight: 800, style: "normal" },
+        { name: "BricolageExt", data: b2, weight: 800, style: "normal" },
         { name: "Manrope", data: m1, weight: 600, style: "normal" },
         { name: "ManropeExt", data: m2, weight: 600, style: "normal" },
       ],

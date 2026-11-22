@@ -70,7 +70,7 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
               {p.is_sold_out && <span className="badge !border-ink !bg-ink !text-paper">Tükendi</span>}
               {p.badges.map((b) => <span key={b} className="badge">{b}</span>)}
             </div>
-            <h1 className="mt-4 font-display text-4xl font-light leading-tight sm:text-5xl">{p.name}</h1>
+            <h1 className="mt-5 font-display text-4xl leading-[0.95] sm:text-6xl">{p.name}</h1>
             {p.code && <p className="mt-2 text-sm text-earth">Ürün kodu: <span className="font-semibold text-ink">{p.code}</span></p>}
 
             <p className="mt-6 font-display text-3xl">
@@ -102,7 +102,7 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
       </div>
 
       <section id="teklif" aria-labelledby="teklif-baslik" className="mx-auto mt-20 max-w-3xl scroll-mt-24 px-5 sm:px-8">
-        <div className="rounded-[28px] border border-line bg-paper-2/50 p-6 sm:p-10">
+        <div className="pop-card bg-lav p-6 sm:p-10">
           <h2 id="teklif-baslik" className="font-display text-3xl">Bu parçadan size özel isteyin</h2>
           <p className="mt-2 text-earth">Farklı ölçü, renk ya da kişiselleştirme için yazın; fiyat ve süreyi iletelim.</p>
           <div className="mt-6"><QuoteForm productId={p.id} productName={p.name} /></div>

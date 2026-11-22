@@ -18,8 +18,8 @@ export default async function Page() {
     <>
       <div className="mx-auto grid max-w-7xl gap-12 px-5 pt-12 sm:px-8 lg:grid-cols-[.8fr_1.2fr]">
         <header>
-          <p className="text-sm font-bold uppercase tracking-[0.2em] text-clay">İletişim</p>
-          <h1 className="mt-1 font-display text-4xl font-light sm:text-5xl">Merhaba deyin.</h1>
+          <p className="inline-flex rounded-full border-2 border-ink bg-mint px-4 py-1.5 text-sm font-extrabold">İletişim</p>
+          <h1 className="mt-5 font-display text-5xl leading-[0.95] sm:text-6xl">Merhaba <span className="hl" style={{ ["--hl" as string]: "#ff4f8b" }}>de!</span></h1>
           <p className="mt-4 text-lg text-earth">İş birliği, sergi ve etkinlik davetleri ya da aklınıza takılan her şey için yazabilirsiniz.</p>
           <ul className="mt-8 space-y-3">
             <li><a href={s.instagram_url} target="_blank" rel="noopener" className="inline-flex items-center gap-3 font-semibold hover:text-clay"><IconInstagram /> @merv.arts</a></li>
@@ -28,7 +28,7 @@ export default async function Page() {
             {s.contact_email && <li><a href={`mailto:${s.contact_email}`} className="font-semibold hover:text-clay">{s.contact_email}</a></li>}
           </ul>
         </header>
-        <section aria-labelledby="iletisim-form" className="rounded-[28px] border border-line bg-paper-2/50 p-6 sm:p-10">
+        <section aria-labelledby="iletisim-form" className="pop-card bg-blush p-6 sm:p-10">
           <h2 id="iletisim-form" className="mb-6 font-display text-2xl">İletişim formu</h2>
           <ContactForm />
         </section>
@@ -37,7 +37,7 @@ export default async function Page() {
       <section id="oneri" aria-labelledby="oneri-baslik" className="mx-auto mt-20 max-w-3xl scroll-mt-24 px-5 sm:px-8">
         <h2 id="oneri-baslik" className="font-display text-3xl">Öneri, istek ve şikayet</h2>
         <p className="mt-2 text-earth">Deneyiminizi iyileştirmek için her bildirimi dikkatle okuyoruz.</p>
-        <div className="mt-6 rounded-[28px] border border-line bg-paper p-6 sm:p-10"><FeedbackForm /></div>
+        <div className="mt-6 pop-card bg-sky/40 p-6 sm:p-10"><FeedbackForm /></div>
       </section>
 
       <ReviewBlock s={s} />

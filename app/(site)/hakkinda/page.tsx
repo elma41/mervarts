@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import HeroArt from "@/components/HeroArt";
+import { ArtGift, ArtJewel, ArtPainting, ArtVase, SpinBadge } from "@/components/Art";
 import { getSettings } from "@/lib/data";
 
 export const revalidate = 60;
@@ -22,8 +22,8 @@ export default async function Page() {
   return (
     <div className="mx-auto grid max-w-7xl gap-12 px-5 pt-12 sm:px-8 md:grid-cols-[1.1fr_.9fr]">
       <article>
-        <p className="text-sm font-bold uppercase tracking-[0.2em] text-clay">Sanatçı</p>
-        <h1 className="mt-1 font-display text-4xl font-light sm:text-5xl">Merve Türkdönmez</h1>
+        <p className="inline-flex rounded-full border-2 border-ink bg-mint px-4 py-1.5 text-sm font-extrabold">Sanatçı</p>
+        <h1 className="mt-5 font-display text-5xl leading-[0.95] sm:text-6xl">Merve Türkdönmez</h1>
         <div className="prose-art mt-6 text-lg">
           {paras.map((t, i) => <p key={i}>{t}</p>)}
         </div>
@@ -32,7 +32,13 @@ export default async function Page() {
           <a href={s.instagram_url} target="_blank" rel="noopener" className="btn btn-ghost">Instagram&apos;da takip edin</a>
         </div>
       </article>
-      <div className="mx-auto w-full max-w-[420px]"><HeroArt /></div>
+      <div className="relative mx-auto h-[460px] w-full max-w-[440px]" aria-hidden="true">
+        <div className="pop-card bob absolute left-0 top-0 flex h-56 w-44 items-center justify-center bg-sun p-5" style={{ ["--r" as string]: "-6deg" }}><ArtPainting className="h-full w-auto" /></div>
+        <div className="pop-card bob-2 absolute right-0 top-10 flex h-52 w-40 items-center justify-center bg-pink p-5" style={{ ["--r" as string]: "5deg" }}><ArtVase className="h-full w-auto" /></div>
+        <div className="pop-card bob-3 absolute bottom-0 left-8 flex h-48 w-40 items-center justify-center bg-sky p-5" style={{ ["--r" as string]: "3deg" }}><ArtJewel className="h-full w-auto" /></div>
+        <div className="pop-card bob absolute bottom-6 right-6 flex h-44 w-36 items-center justify-center bg-mint p-5" style={{ ["--r" as string]: "-4deg" }}><ArtGift className="h-full w-auto" /></div>
+        <SpinBadge className="absolute left-1/2 top-1/2 h-28 w-28 -translate-x-1/2 -translate-y-1/2" />
+      </div>
     </div>
   );
 }

@@ -10,7 +10,7 @@ function fitRatio(el: HTMLImageElement | null) {
 }
 
 /** Ürünlerin yana kayarak değiştiği tam genişlikte giriş alanı. Kütüphane yok. */
-export default function HeroSlider({ slides }: { slides: HeroSlide[] }) {
+export default function HeroSlider({ slides, compact = false }: { slides: HeroSlide[]; compact?: boolean }) {
   const [i, setI] = useState(0);
   const [paused, setPaused] = useState(false);
   const n = slides.length;
@@ -26,12 +26,12 @@ export default function HeroSlider({ slides }: { slides: HeroSlide[] }) {
 
   return (
     <section
-      className="hs" aria-roledescription="carousel" aria-label="Öne çıkan eserler"
+      className={compact ? "hs hs-sm" : "hs"} aria-roledescription="carousel" aria-label="Öne çıkan eserler"
       onMouseEnter={() => setPaused(true)} onMouseLeave={() => setPaused(false)} onFocus={() => setPaused(true)} onBlur={() => setPaused(false)}
       onTouchStart={(e) => { touch.current = e.touches[0].clientX; }}
       onTouchEnd={(e) => { if (touch.current == null) return; const dx = e.changedTouches[0].clientX - touch.current; if (Math.abs(dx) > 50) go(dx < 0 ? 1 : -1); touch.current = null; }}
     >
-      <h1 className="sr-only">merv.arts: Merve Türkdönmez el yapımı tezhip ve hat sanatı</h1>
+      {!compact && <h1 className="sr-only">merv.arts: Merve Türkdönmez el yapımı tezhip ve hat sanatı</h1>}
       {slides.map((s, k) => {
         const d = (k - i + n) % n;
         const state = d === 0 ? "active" : d === n - 1 ? "prev" : "next";

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import PageSlider from "@/components/PageSlider";
 import ContactForm from "@/components/forms/ContactForm";
 import FeedbackForm from "@/components/forms/FeedbackForm";
 import ReviewBlock from "@/components/ReviewBlock";
@@ -16,6 +17,7 @@ export default async function Page() {
   const s = await getSettings();
   return (
     <>
+      <PageSlider page="iletisim" />
       <header className="mx-auto max-w-[1440px] px-5 pt-12 sm:px-10 lg:px-14">
         <h1 className="font-display text-6xl leading-[.95] sm:text-7xl">Merhaba, <em className="text-cobalt">yazın.</em></h1>
         <p className="mt-4 max-w-2xl text-lg text-earth">İş birliği, sergi ve etkinlik davetleri ya da aklınıza takılan her şey için yazabilirsiniz.</p>

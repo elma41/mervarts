@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import PageSlider from "@/components/PageSlider";
 import Link from "next/link";
 import AboutShow from "@/components/AboutShow";
 import { getProducts, getSettings } from "@/lib/data";
@@ -28,6 +29,7 @@ export default async function Page() {
       ];
   return (
     <>
+    <PageSlider page="hakkinda" />
     <div className="mx-auto grid max-w-[1440px] gap-12 px-5 pt-12 sm:px-10 lg:px-14 md:grid-cols-[1.1fr_.9fr]">
       <article className="relative z-10">
         <h1 className="font-display text-6xl leading-[.95] sm:text-7xl">Merve Türkdönmez</h1>

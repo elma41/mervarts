@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import PageSlider from "@/components/PageSlider";
 import QuoteForm from "@/components/forms/QuoteForm";
 import { getSettings } from "@/lib/data";
 import { waLink } from "@/lib/format";
@@ -15,6 +16,8 @@ export default async function Page() {
   const s = await getSettings();
   const wa = waLink(s.whatsapp_number, "Merhaba, özel sipariş için bilgi almak istiyorum.");
   return (
+    <>
+    <PageSlider page="ozel-siparis" />
     <div className="mx-auto grid max-w-[1440px] gap-12 px-5 pt-12 sm:px-10 lg:px-14 lg:grid-cols-[.9fr_1.1fr]">
       <header>
         <h1 className="font-display text-6xl font-semibold leading-[.95] sm:text-7xl xl:text-8xl">Aklındaki parçayı <em className="text-cobalt">birlikte</em> yapalım.</h1>
@@ -32,5 +35,6 @@ export default async function Page() {
         <QuoteForm />
       </section>
     </div>
+    </>
   );
 }

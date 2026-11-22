@@ -378,7 +378,7 @@ body:has(.slider[data-tone="dark"]) header nav[aria-label="Mobil menü"] { --col
 .hs-btn-ghost { border: 2px solid #fff6df; color: #fff6df; }.hs-btn-ghost:hover { background: #fff6df; color: #2a1019; }
 .hs-btn-buy { background: #e6c677; color: #1c1b2b; }.hs-btn-buy:hover { background: #f3d98f; transform: translateY(-1px); }
 .hs-frame { justify-self: center; width: min(40vw, 470px, max(240px, calc((100svh - 320px) * .8))); aspect-ratio: 4 / 5; overflow: hidden; border-radius: 26px; background: #2a1019; border: 1px solid rgba(255, 246, 223, .35); box-shadow: 0 40px 70px -28px rgba(0, 0, 0, .75), 0 0 0 8px rgba(255, 246, 223, .08); display: block; }
-.hs-frame img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 60%; transition: transform 6s ease-out; }
+.hs-frame img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 60%; transition: transform 4s ease-out; }
 .hs-slide[data-state="active"] .hs-frame img { transform: scale(1.06); }
 /* içerik, kayma sırasında hafif geriden gelir */
 .hs-slide .hs-frame { transition: transform 1.1s var(--ease-soft) .12s, opacity .8s .12s; }
@@ -398,7 +398,7 @@ body:has(.slider[data-tone="dark"]) header nav[aria-label="Mobil menü"] { --col
 .hs-dot { position: relative; }
 .hs-dot i { display: block; width: 100%; height: 3px; background: rgba(255, 246, 223, .3); position: relative; overflow: hidden; }
 .hs-dot i::after { content: ""; position: absolute; inset: 0; width: 0; background: #e6c677; }
-.hs-dot[data-on="true"] i::after { animation: hsfill 6.5s linear forwards; }
+.hs-dot[data-on="true"] i::after { animation: hsfill 4s linear forwards; }
 @keyframes hsfill { to { width: 100%; } }
 @media (max-width: 1023px) {
   .hs { height: min(88svh, 720px); }

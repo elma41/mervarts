@@ -15,7 +15,7 @@ export default function HeroSlider({ slides }: { slides: HeroSlide[] }) {
   useEffect(() => {
     if (paused || n < 2) return;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    const t = setInterval(() => setI((x) => (x + 1) % n), 6500);
+    const t = setInterval(() => setI((x) => (x + 1) % n), 4000);
     return () => clearInterval(t);
   }, [paused, n, i]);
 

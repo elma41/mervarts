@@ -35,20 +35,20 @@ export function Guard({ ch, chErr, answer, setAnswer, consent, setConsent }: {
         <input id={`${id}-web`} name="website" type="text" tabIndex={-1} autoComplete="off" />
       </div>
 
-      <div className="grid gap-3 sm:grid-cols-[1fr_auto] sm:items-end">
+      <div className="grid gap-2.5 sm:grid-cols-[1fr_auto] sm:items-end">
         <div>
           <label htmlFor={`${id}-q`} className="field-label">
             Güvenlik sorusu: <span className="font-display text-base">{ch ? ch.question : chErr || "forma yazmaya başlayınca görünür"}</span>
           </label>
-          <input id={`${id}-q`} className="field max-w-[140px]" inputMode="numeric" pattern="[0-9]*" required autoComplete="off"
+          <input id={`${id}-q`} className="field max-w-[110px]" inputMode="numeric" pattern="[0-9]*" required autoComplete="off"
             value={answer} onChange={(e) => setAnswer(e.target.value.replace(/\D/g, "").slice(0, 3))} aria-describedby={`${id}-qh`} />
-          <p id={`${id}-qh`} className="mt-1 text-xs text-earth">Bot gönderimlerini engellemek için. Yalnızca rakam girin.</p>
+          <p id={`${id}-qh`} className="mt-1 text-[11px] text-earth">Bot gönderimlerini engellemek için. Yalnızca rakam girin.</p>
         </div>
       </div>
 
-      <label className="flex cursor-pointer items-start gap-3 rounded-xl border border-line bg-paper px-3 py-2">
-        <input type="checkbox" required checked={consent} onChange={(e) => setConsent(e.target.checked)} className="mt-1 h-4 w-4 shrink-0 accent-[#9e4126]" />
-        <span className="text-[13px] leading-snug">
+      <label className="flex cursor-pointer items-start gap-2.5 rounded-xl border border-line bg-paper px-2.5 py-1.5">
+        <input type="checkbox" required checked={consent} onChange={(e) => setConsent(e.target.checked)} className="mt-1 h-3.5 w-3.5 shrink-0 accent-[#9e4126]" />
+        <span className="text-xs leading-snug">
           <Link href="/kvkk" target="_blank" className="font-semibold text-clay underline underline-offset-2">KVKK Aydınlatma Metni</Link>&apos;ni okudum, kişisel verilerimin işlenmesini kabul ediyorum. <span className="text-clay" aria-hidden="true">*</span>
         </span>
       </label>

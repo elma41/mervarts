@@ -254,3 +254,11 @@ body {
 @media (prefers-reduced-motion: reduce) {
   .slide { display: none; } .slide:first-child { display: block; }
 }
+
+/* Telefon düzeni */
+@media (max-width: 639px) {
+  .slide-cap { display: none; }
+  .scene { height: 86svh; min-height: 520px; }
+  .hero-shell { min-height: 600px; }
+  .marquee span { font-size: 2.4rem; }
+}

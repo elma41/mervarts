@@ -16,27 +16,34 @@ export default async function Page() {
   const s = await getSettings();
   return (
     <>
-      <div className="mx-auto grid max-w-7xl gap-12 px-5 pt-12 sm:px-8 lg:grid-cols-[.8fr_1.2fr]">
-        <header>
-          <h1 className="font-display text-6xl leading-[.95] sm:text-7xl">Merhaba, <em className="text-cobalt">yazın.</em></h1>
-          <p className="mt-4 text-lg text-earth">İş birliği, sergi ve etkinlik davetleri ya da aklınıza takılan her şey için yazabilirsiniz.</p>
-          <ul className="mt-8 space-y-3">
-            <li><a href={s.instagram_url} target="_blank" rel="noopener" className="inline-flex items-center gap-3 font-semibold hover:text-clay"><IconInstagram /> @merv.arts</a></li>
-            <li><a href={s.shopier_url} target="_blank" rel="noopener" className="inline-flex items-center gap-3 font-semibold hover:text-clay"><IconBag /> Shopier mağazası</a></li>
-            {s.whatsapp_number && <li><a href={`https://wa.me/${s.whatsapp_number}`} target="_blank" rel="noopener" className="inline-flex items-center gap-3 font-semibold hover:text-clay"><IconWhatsApp /> WhatsApp</a></li>}
-            {s.contact_email && <li><a href={`mailto:${s.contact_email}`} className="font-semibold hover:text-clay">{s.contact_email}</a></li>}
-          </ul>
-        </header>
-        <section aria-labelledby="iletisim-form" className="panel p-6 sm:p-10">
-          <h2 id="iletisim-form" className="mb-6 font-display text-2xl">İletişim formu</h2>
-          <ContactForm />
-        </section>
-      </div>
+      <header className="mx-auto max-w-7xl px-5 pt-12 sm:px-8">
+        <h1 className="font-display text-6xl leading-[.95] sm:text-7xl">Merhaba, <em className="text-cobalt">yazın.</em></h1>
+        <p className="mt-4 max-w-2xl text-lg text-earth">İş birliği, sergi ve etkinlik davetleri ya da aklınıza takılan her şey için yazabilirsiniz.</p>
+      </header>
 
-      <section id="oneri" aria-labelledby="oneri-baslik" className="mx-auto mt-20 max-w-3xl scroll-mt-24 px-5 sm:px-8">
-        <h2 id="oneri-baslik" className="font-display text-3xl">Öneri, istek ve şikayet</h2>
-        <p className="mt-2 text-earth">Deneyiminizi iyileştirmek için her bildirimi dikkatle okuyoruz.</p>
-        <div className="mt-6 panel p-6 sm:p-10"><FeedbackForm /></div>
+      <section aria-labelledby="iletisim-form" className="mx-auto mt-10 max-w-7xl px-5 sm:px-8">
+        <div className="panel grid gap-8 p-6 sm:p-10 lg:grid-cols-[minmax(0,320px)_1fr] lg:gap-14 lg:p-14">
+          <div>
+            <h2 id="iletisim-form" className="font-display text-4xl leading-tight">İletişim formu</h2>
+            <ul className="mt-6 space-y-3">
+              <li><a href={s.instagram_url} target="_blank" rel="noopener" className="inline-flex items-center gap-3 font-semibold hover:text-clay"><IconInstagram /> @merv.arts</a></li>
+              <li><a href={s.shopier_url} target="_blank" rel="noopener" className="inline-flex items-center gap-3 font-semibold hover:text-clay"><IconBag /> Shopier mağazası</a></li>
+              {s.whatsapp_number && <li><a href={`https://wa.me/${s.whatsapp_number}`} target="_blank" rel="noopener" className="inline-flex items-center gap-3 font-semibold hover:text-clay"><IconWhatsApp /> WhatsApp</a></li>}
+              {s.contact_email && <li><a href={`mailto:${s.contact_email}`} className="font-semibold hover:text-clay">{s.contact_email}</a></li>}
+            </ul>
+          </div>
+          <ContactForm />
+        </div>
+      </section>
+
+      <section id="oneri" aria-labelledby="oneri-baslik" className="mx-auto mt-12 max-w-7xl scroll-mt-24 px-5 sm:px-8">
+        <div className="panel grid gap-8 p-6 sm:p-10 lg:grid-cols-[minmax(0,320px)_1fr] lg:gap-14 lg:p-14">
+          <div>
+            <h2 id="oneri-baslik" className="font-display text-4xl leading-tight">Öneri, istek ve şikayet</h2>
+            <p className="mt-4 text-lg text-earth">Deneyiminizi iyileştirmek için her bildirimi dikkatle okuyoruz.</p>
+          </div>
+          <FeedbackForm />
+        </div>
       </section>
 
       <ReviewBlock s={s} />

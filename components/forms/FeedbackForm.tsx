@@ -29,29 +29,31 @@ export default function FeedbackForm() {
 
   return (
     <form onSubmit={onSubmit} onFocusCapture={ensure} onPointerDownCapture={ensure} className="relative grid gap-4">
-      <fieldset>
-        <legend className="field-label">Bildirim türü *</legend>
-        <div className="flex flex-wrap gap-2">
-          {[["oneri", "Öneri"], ["istek", "İstek"], ["sikayet", "Şikayet"]].map(([v, l], i) => (
-            <label key={v} className="inline-flex min-h-[44px] cursor-pointer items-center gap-2 rounded-full border border-line px-4 has-[:checked]:border-ink has-[:checked]:bg-ink has-[:checked]:text-paper">
-              <input type="radio" name="kind" value={v} defaultChecked={i === 0} className="accent-[#9e4126]" /> {l}
-            </label>
-          ))}
+      <div className="grid gap-x-8 gap-y-4 md:grid-cols-2">
+        <div className="grid content-start gap-4">
+          <fieldset>
+            <legend className="field-label">Bildirim türü *</legend>
+            <div className="flex flex-wrap gap-2">
+              {[["oneri", "Öneri"], ["istek", "İstek"], ["sikayet", "Şikayet"]].map(([v, l], i) => (
+                <label key={v} className="inline-flex min-h-[44px] cursor-pointer items-center gap-2 rounded-full border border-line bg-white px-4 has-[:checked]:border-ink has-[:checked]:bg-ink has-[:checked]:text-paper">
+                  <input type="radio" name="kind" value={v} defaultChecked={i === 0} className="accent-[#9e4126]" /> {l}
+                </label>
+              ))}
+            </div>
+          </fieldset>
+          <div>
+            <label htmlFor="f-name" className="field-label">Adınız (isteğe bağlı)</label>
+            <input id="f-name" name="name" className="field" maxLength={100} autoComplete="name" />
+          </div>
+          <div>
+            <label htmlFor="f-contact" className="field-label">E-posta / telefon (isteğe bağlı)</label>
+            <input id="f-contact" name="contact" className="field" maxLength={160} />
+          </div>
         </div>
-      </fieldset>
-      <div className="grid gap-4 sm:grid-cols-2">
-        <div>
-          <label htmlFor="f-name" className="field-label">Adınız (isteğe bağlı)</label>
-          <input id="f-name" name="name" className="field" maxLength={100} autoComplete="name" />
+        <div className="flex flex-col">
+          <label htmlFor="f-msg" className="field-label">Mesajınız *</label>
+          <textarea id="f-msg" name="message" className="field min-h-[14rem] flex-1 md:min-h-0" required minLength={10} maxLength={3000} />
         </div>
-        <div>
-          <label htmlFor="f-contact" className="field-label">E-posta / telefon (isteğe bağlı)</label>
-          <input id="f-contact" name="contact" className="field" maxLength={160} />
-        </div>
-      </div>
-      <div>
-        <label htmlFor="f-msg" className="field-label">Mesajınız *</label>
-        <textarea id="f-msg" name="message" className="field" required minLength={10} maxLength={3000} />
       </div>
       <Guard ch={ch} chErr={err} answer={answer} setAnswer={setAnswer} consent={consent} setConsent={setConsent} />
       <Status state={state} message={msg} />

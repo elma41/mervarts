@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { HeroHat } from "./Hat";
 
-export type ShowItem = { slug: string; name: string; src: string; srcSet: string; alt: string };
+export type ShowItem = { slug: string; name: string; src: string; srcSet?: string; alt: string };
 
 export default function AboutShow({ items }: { items: ShowItem[] }) {
   const [i, setI] = useState(0);

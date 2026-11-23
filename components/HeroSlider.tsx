@@ -13,9 +13,6 @@ function fitRatio(el: HTMLImageElement | null) {
 export default function HeroSlider({ slides }: { slides: HeroSlide[] }) {
   const [i, setI] = useState(0);
   const [paused, setPaused] = useState(false);
-  // Sayfa ilk açılırken ölçüm araçları sonradan boyanan slayt resimlerini 'en büyük içerik' sayar; otomatik geçiş biraz gecikmeli başlar
-  const [armed, setArmed] = useState(false);
-  useEffect(() => { const t = setTimeout(() => setArmed(true), 9000); return () => clearTimeout(t); }, []);
   const n = slides.length;
   const touch = useRef<number | null>(null);
   // Çerçeveye oturmayan (çok yatay/çok dar) fotoğraf yerine aynı eserin uygun bir fotoğrafı seçilir
@@ -23,11 +20,11 @@ export default function HeroSlider({ slides }: { slides: HeroSlide[] }) {
   const go = useCallback((d: number) => setI((x) => (x + d + n) % n), [n]);
 
   useEffect(() => {
-    if (!armed || paused || n < 2) return;
+    if (paused || n < 2) return;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     const t = setInterval(() => setI((x) => (x + 1) % n), 3000);
     return () => clearInterval(t);
-  }, [armed, paused, n, i]);
+  }, [paused, n, i]);
 
   return (
     <section

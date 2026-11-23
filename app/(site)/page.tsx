@@ -95,7 +95,7 @@ export default async function Home() {
           <Link href="/urunler" className="link-line">Filtrele ve sırala</Link>
         </div>
         <div className="mt-8 grid grid-cols-2 gap-x-4 gap-y-10 sm:gap-x-6 lg:grid-cols-4">
-          {latest.slice(0, 12).map((p, i) => <div key={p.id} data-reveal style={{ ["--delay" as string]: `${(i % 4) * 0.08}s` }}><ProductCard p={p} priority={i < 4} /></div>)}
+          {latest.slice(0, 12).map((p, i) => <div key={p.id} data-reveal style={{ ["--delay" as string]: `${(i % 4) * 0.08}s` }}><ProductCard p={p} priority={false} /></div>)}
         </div>
       </section>
 

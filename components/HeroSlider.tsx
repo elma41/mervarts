@@ -6,7 +6,7 @@ export type HeroSlide = { slug: string; name: string; category: string; price: s
 
 /** Çerçeve, resmin gerçek oranına uysun (beyaz boşluk kalmasın). */
 function fitRatio(el: HTMLImageElement | null) {
-  if (el && el.complete && el.naturalWidth) el.style.aspectRatio = `${el.naturalWidth} / ${el.naturalHeight}`;
+  if (el && el.complete && el.naturalWidth) el.parentElement?.style.setProperty("--r", `${el.naturalWidth} / ${el.naturalHeight}`);
 }
 
 /** Ürünlerin yana kayarak değiştiği tam genişlikte giriş alanı. Kütüphane yok. */

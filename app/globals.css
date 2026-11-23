@@ -405,9 +405,11 @@ body:has(.slider[data-tone="dark"]) header nav[aria-label="Mobil menü"] { --col
 @media (max-width: 1023px) {
   .hs { height: min(88svh, 720px); }
   .hs-in { grid-template-columns: 1fr; grid-template-rows: auto 1fr; align-content: center; gap: 1rem; text-align: center; padding-top: 1.2rem; }
-  .hs-in .hs-frame { order: -1; height: min(46svh, 360px); }
+  .hs-in { align-content: start; padding-top: 1.4rem; padding-bottom: 6.5rem; }
+  .hs-in .hs-frame { order: -1; height: min(42svh, 360px); max-width: calc(100vw - 2.5rem); }
+  .hs-in .hs-frame img { height: auto; width: auto; max-height: 100%; max-width: calc(100vw - 4.5rem); }
   .hs-copy { margin: 0 auto; } .hs-btns { justify-content: center; } .hs-name { font-size: clamp(2.2rem, 10vw, 3.2rem); } .hs-price { font-size: 1.7rem; margin-top: .4rem; }
-  .hs-cat { display: none; } .hs-ctrl { bottom: 3.2rem; justify-content: center; }
+  .hs-cat { display: none; } .hs-ctrl { bottom: 1.2rem; justify-content: center; }
 }
 @media (prefers-reduced-motion: reduce) { .hs-slide, .hs-slide * { transition: none !important; } .hs-dot[data-on="true"] i::after { animation: none; width: 100%; } }
 

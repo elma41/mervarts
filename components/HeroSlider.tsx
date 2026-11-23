@@ -2,7 +2,7 @@
 import Link from "next/link";
 import { useCallback, useEffect, useRef, useState } from "react";
 
-export type HeroSlide = { slug: string; name: string; category: string; price: string; buy: string | null; src: string; srcSet?: string; alt: string; alts?: { src: string; srcSet?: string }[] };
+export type HeroSlide = { slug: string; name: string; category: string; price: string; buy: string | null; src: string; srcSet?: string; alt: string; alts?: { src: string; srcSet?: string; sm?: string }[] };
 
 /** Çerçeve, resmin gerçek oranına uysun (beyaz boşluk kalmasın). */
 function fitRatio(el: HTMLImageElement | null) {
@@ -36,14 +36,14 @@ export default function HeroSlider({ slides }: { slides: HeroSlide[] }) {
       <h1 className="sr-only">merv.arts: Merve Türkdönmez el yapımı tezhip ve hat sanatı</h1>
       {slides.map((s, k) => {
         const d = (k - i + n) % n;
-        const alts = s.alts && s.alts.length ? s.alts : [{ src: s.src, srcSet: s.srcSet }];
+        const alts = s.alts && s.alts.length ? s.alts : [{ src: s.src, srcSet: s.srcSet, sm: s.src }];
         const cur = alts[(pick[k] || 0) % alts.length];
         const state = d === 0 ? "active" : d === n - 1 ? "prev" : "next";
         return (
           <div key={s.slug} className="hs-slide" data-state={state} aria-hidden={d !== 0} role="group" aria-roledescription="slayt" aria-label={`${k + 1} / ${n}: ${s.name}`}>
             <div className="hs-bg">
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={cur.src} srcSet={cur.srcSet} sizes="100vw" width={1600} height={2000} alt="" loading={k === 0 ? "eager" : "lazy"} decoding="async" />
+              <img src={cur.sm || cur.src} width={640} height={800} alt="" loading="lazy" decoding="async" />
             </div>
             <div className="hs-in">
               <div className="hs-copy">

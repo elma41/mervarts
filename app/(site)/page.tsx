@@ -22,7 +22,7 @@ export default async function Home() {
   const heroSlides: HeroSlide[] = [...withPhoto.filter((p) => p.is_featured), ...withPhoto.filter((p) => !p.is_featured)].slice(0, 6).map((p) => {
     const im = img(p)!;
     return { slug: p.slug, name: p.name, category: p.categories?.name || "", src: im.src.lg, srcSet: im.src.srcSet, alt: im.alt,
-      alts: sortImages(p.product_images).slice(0, 4).map((x) => { const u = productImage(x.path); return { src: u.lg, srcSet: u.srcSet }; }),
+      alts: sortImages(p.product_images).slice(0, 4).map((x) => { const u = productImage(x.path); return { src: u.lg, srcSet: u.srcSet, sm: u.sm }; }),
       price: p.pricing_mode === "fixed" && p.price != null ? price(p.price) : "Fiyat için teklif alın", buy: p.is_sold_out ? null : p.shopier_url || s.shopier_url };
   });
   const slidePool = [...withPhoto.filter((p) => p.is_featured), ...withPhoto.filter((p) => !p.is_featured)].slice(0, 4);

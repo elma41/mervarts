@@ -33,6 +33,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="tr" suppressHydrationWarning>
       <head>
+        <link rel="preconnect" href={process.env.NEXT_PUBLIC_SUPABASE_URL || "https://yedgykhlufezkuxbmeni.supabase.co"} crossOrigin="anonymous" />
         <link rel="preload" href={`${BASE}/fonts/cormorant-garamond-latin-500-normal.woff2`} as="font" type="font/woff2" crossOrigin="anonymous" />
         <link rel="preload" href={`${BASE}/fonts/inter-tight-latin-wght-normal.woff2`} as="font" type="font/woff2" crossOrigin="anonymous" />
         <script dangerouslySetInnerHTML={{ __html: "document.documentElement.classList.add('js')" }} />

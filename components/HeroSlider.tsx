@@ -43,7 +43,7 @@ export default function HeroSlider({ slides }: { slides: HeroSlide[] }) {
           <div key={s.slug} className="hs-slide" data-state={state} aria-hidden={d !== 0} role="group" aria-roledescription="slayt" aria-label={`${k + 1} / ${n}: ${s.name}`}>
             <div className="hs-bg">
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={cur.sm || cur.src} width={640} height={800} alt="" loading="lazy" decoding="async" />
+              <img src={cur.sm || cur.src} width={640} height={800} alt="" loading={k === 0 ? "eager" : "lazy"} fetchPriority={k === 0 ? "high" : "auto"} decoding="async" />
             </div>
             <div className="hs-in">
               <div className="hs-copy">
